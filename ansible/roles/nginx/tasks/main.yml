@@ -1,0 +1,6 @@
+---
+# tasks file for ansible/roles/nginx
+- name: Nginx | Install
+  apt:
+    name: nginx
+    state: present

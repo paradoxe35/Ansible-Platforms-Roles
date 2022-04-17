@@ -16,4 +16,5 @@
   roles:
     - tools
     - docker
+    - nginx
     # - mysql
