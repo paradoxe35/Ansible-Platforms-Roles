@@ -28,6 +28,6 @@
     mode: 755
 
 - name: Docker Compose | Create Symbolic Link
-  shell: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+  command: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   args:
     creates: /usr/bin/docker-compose
