@@ -15,4 +15,5 @@
 
   roles:
     - tools
+    - docker
     # - mysql

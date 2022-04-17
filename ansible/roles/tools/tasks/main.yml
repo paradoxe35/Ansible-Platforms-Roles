@@ -7,3 +7,23 @@
       - vim
       - git
     state: present
+
+- name: Install aptitude
+  apt:
+    name:
+      - aptitude
+    state: present
+    update_cache: yes
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
