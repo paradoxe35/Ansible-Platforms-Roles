@@ -5,6 +5,9 @@
   become: true
   become_method: sudo
   tasks:
+    - name: Include config vars
+      include_vars:
+        file: "vars.yml"
     - name: APT | Update & Upgrade
       apt:
         upgrade: dist
