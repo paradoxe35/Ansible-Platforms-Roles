@@ -5,7 +5,6 @@
   apt:
     name:
       - mysql-server
-      - python-mysqldb
     state: present
 
 - name: MySQL | Set root password
