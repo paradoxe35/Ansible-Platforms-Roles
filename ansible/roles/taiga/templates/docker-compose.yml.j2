@@ -9,7 +9,7 @@ x-environment:
   POSTGRES_HOST: taiga-db
   # Taiga settings
   TAIGA_SECRET_KEY: "taiga123"
-  TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == true else '' }}"
+  TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == 'true' else '' }}"
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
   # Email settings. Uncomment following lines and configure your SMTP server
@@ -85,8 +85,8 @@ services:
   taiga-front:
     image: taigaio/taiga-front:latest
     environment:
-      TAIGA_URL: "http{{ 's' if taiga_secure == true else '' }}://{{ taiga_domain }}"
-      TAIGA_WEBSOCKETS_URL: "ws{{ 's' if taiga_secure == true else '' }}://{{ taiga_domain }}"
+      TAIGA_URL: "http{{ 's' if taiga_secure == 'true' else '' }}://{{ taiga_domain }}"
+      TAIGA_WEBSOCKETS_URL: "ws{{ 's' if taiga_secure == 'true' else '' }}://{{ taiga_domain }}"
       TAIGA_SUBPATH: "" # "" or "/subpath"
     networks:
       - taiga

@@ -1,15 +1,12 @@
 ---
 # tasks file for ansible/roles/taiga
 
-- name: Taiga | Copy taiga-config folder to remote server
-  become: true
-  copy:
-    src: "../files/taiga-config"
-    dest: "/home/{{ ansible_user }}/taiga-config"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0755"
-    force: yes
+- name: Taiga | Create taiga-config folder
+  file:
+    path: "/home/{{ ansible_user }}/taiga-config/taiga-gateway"
+    state: directory
+    recurse: yes
+    mode: 0755
 
 - name: Taiga | docker compose template
   template:
