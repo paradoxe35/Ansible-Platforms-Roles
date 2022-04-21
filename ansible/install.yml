@@ -13,7 +13,7 @@
         update_cache: yes
 
   roles:
-    # - tools
-    # - docker
-    # - nginx
-    - mysql
+    - tools
+    - docker
+    - nginx
+    # - mysql
