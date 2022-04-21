@@ -1,0 +1,71 @@
+---
+# tasks file for ansible/roles/taiga
+
+- name: Taiga | Copy taiga-config folder to remote server
+  become: true
+  copy:
+    src: "../files/taiga-config"
+    dest: "/home/{{ ansible_user }}/taiga-config"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+    force: yes
+
+- name: Taiga | docker compose template
+  template:
+    src: "../templates/docker-compose.yml.j2"
+    dest: "/home/{{ ansible_user }}/taiga-config/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+    force: yes
+
+- name: Taiga | taiga conf with ssl template
+  template:
+    src: "../templates/taiga-secure.conf.j2"
+    dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+    force: yes
+  when: taiga_secure == true
+
+- name: Taiga | taiga conf without ssl template
+  template:
+    src: "../templates/taiga-insecure.conf.j2"
+    dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+    force: yes
+  when: taiga_secure == false
+
+- name: Taiga | Docker compose create and start services
+  become: true
+  community.docker.docker_compose:
+    project_src: "/home/{{ ansible_user }}/taiga-config"
+    project_name: taiga
+    files:
+      - docker-compose.yml
+  register: output
+
+- debug:
+    var: output
+
+- name: Taiga | generate ssh certificate
+  become: true
+  shell: docker-compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} --email {{ system_email }} --agree-tos --no-eff-email --no-redirect --no-self-upgrade --rsa-key-size 4096 --force-renewal
+  args:
+    chdir: "/home/{{ ansible_user }}/taiga-config"
+    creates: "/home/{{ ansible_user }}/taiga-config/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
+  when: taiga_secure == true
+
+- name: Taiga | Docker compose recreate services
+  become: true
+  community.docker.docker_compose:
+    project_src: "/home/{{ ansible_user }}/taiga-config"
+    project_name: taiga
+    files:
+      - docker-compose.yml
+    build: yes
+  when: taiga_secure == true

@@ -1,12 +1,12 @@
 # test server
 [test_server]
-6.tcp.eu.ngrok.io
+0.tcp.in.ngrok.io
 
 [test_server:vars]
 ansible_connection=ssh
 ansible_user=vagrant
 ansible_ssh_pass=vagrant
-ansible_ssh_port=17089
+ansible_ssh_port=12520
 
 # progile server
 [progile_server]

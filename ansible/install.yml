@@ -16,4 +16,5 @@
     - tools
     - docker
     - nginx
-    # - mysql
+    - mysql
+    - { role: taiga, tags: ["docker", "taiga"] }

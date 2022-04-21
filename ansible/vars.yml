@@ -1,2 +1,5 @@
 ---
 mysql_root_password: mysql_password
+taiga_secure: false
+taiga_domain: taiga.example.com
+system_email: installation@icloudeng.com
