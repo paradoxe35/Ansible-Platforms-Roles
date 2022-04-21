@@ -1,0 +1,7 @@
+# test server
+[test_server]
+localhost
+
+[test_server:vars]
+ansible_connection=ssh
+ansible_user=root
