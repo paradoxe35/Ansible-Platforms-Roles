@@ -1,11 +1,19 @@
 ---
 # tasks file for ansible/tools
-- name: TOOLS | fish + vim + git
+- name: Outils | Install
   apt:
     name:
+      - redis
       - fish
       - vim
       - git
+      - ntp
+      - rsync
+      - fail2ban
+      - certbot
+      - acl
+      - make
+      - ffmpeg
     state: present
 
 - name: Install aptitude

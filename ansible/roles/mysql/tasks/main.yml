@@ -1,28 +1,39 @@
 ---
 # tasks file for ansible/roles/mysql
 
-- name: MySQL | Install
+- name: Mysql | Install and dependencies
   apt:
     name:
       - mysql-server
+      - mysql-client
+      - mysql-common
+      - libmysqlclient-dev
     state: present
+    update_cache: yes
 
-- name: MySQL | Set root password
-  mysql_user:
-    check_implicit_admin: true
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    user: root
-    host: localhost
-    password: "{{ mysql_root_password }}"
-    state: present
-
-- name: MySQL | Remove anonymous users
-  mysql_user:
-    login_user: root
-    login_password: "{{ mysql_root_password }}"
-    user: ""
+- name: MySQL | Pip Install Pymysql
+  pip:
+    name: pymysql
     state: absent
+
+- name: MySQL | start and enable mysql service
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Removes all anonymous user accounts
+  community.mysql.mysql_user:
+    name: ""
+    host_all: yes
+    state: absent
+
+- name: Create database user with name 'bob' and password '12345' with all database privileges
+  community.mysql.mysql_user:
+    name: root
+    password: "{{ mysql_root_password }}"
+    priv: "*.*:ALL"
+    state: present
 
 - name: MySQL | Remove test database
   mysql_db:

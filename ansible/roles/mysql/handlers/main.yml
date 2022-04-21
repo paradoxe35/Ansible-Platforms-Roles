@@ -1,2 +1,6 @@
 ---
 # handlers file for ansible/roles/mysql
+- name: Restart mysql
+  service:
+    name: mysql
+    state: restarted

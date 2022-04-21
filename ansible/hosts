@@ -53,3 +53,12 @@ ansible_ssh_pass=ZnP7N9sxgZcm
 ansible_connection=ssh
 ansible_user=ubuntu
 ansible_ssh_pass=esY9Ek3T84je
+
+# classroom server
+[classroom_server]
+51.210.178.219
+
+[classroom_server:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=MbZtzfXpSacW

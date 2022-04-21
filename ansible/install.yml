@@ -1,19 +1,19 @@
 ---
 - name: "Server initialization"
-  hosts: testservers
+  hosts: test_server
   remote_user: vagrant
   become: true
   become_method: sudo
+  vars_files:
+    - vars.yml
   tasks:
-    - include_vars:
-        file: vars.yml
     - name: APT | Update & Upgrade
       apt:
         upgrade: dist
         update_cache: yes
 
   roles:
-    - tools
-    - docker
-    - nginx
+    # - tools
+    # - docker
+    # - nginx
     - mysql
