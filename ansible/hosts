@@ -1,13 +1,55 @@
-[testservers]
-192.168.1.88
+# test server
+[test_server]
+6.tcp.eu.ngrok.io
 
-[testservers:vars]
+[test_server:vars]
 ansible_connection=ssh
 ansible_user=vagrant
 ansible_ssh_pass=vagrant
+ansible_ssh_port=17089
 
-[remoteservers]
+# progile server
+[progile_server]
+51.210.181.5
+
+[progile_server:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=SSswdcNjhmMa
+
+# bigroom server
+[bigroom_server]
 51.210.183.23
 
-[remoteservers:vars]
-user=ubuntu
+[bigroom_server:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=YDUkhg9Mg2Ph
+
+# salesforce server
+[salesforce_server]
+51.210.180.141
+
+[salesforce_server:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=ZnP7N9sxgZcm
+
+# salesforce server
+[salesforce_server]
+51.210.180.141
+
+[salesforce_server:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=ZnP7N9sxgZcm
+
+
+# etl server
+[etl_server]
+51.210.181.31
+
+[etl_server:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_ssh_pass=esY9Ek3T84je
