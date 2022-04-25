@@ -3,18 +3,26 @@
 - name: Outils | Install
   apt:
     name:
-      - redis
-      - fish
-      - vim
-      - git
       - ntp
       - rsync
       - fail2ban
       - certbot
-      - acl
-      - make
       - ffmpeg
     state: present
+
+- name: Outils | Latest
+  apt:
+    name:
+      - acl
+      - zip
+      - unzip
+      - curl
+      - wget
+      - make
+      - git
+      - vim
+    state: latest
+    update_cache: yes
 
 - name: Install aptitude
   apt:
@@ -28,7 +36,6 @@
     pkg:
       - apt-transport-https
       - ca-certificates
-      - curl
       - software-properties-common
       - python3-pip
       - virtualenv

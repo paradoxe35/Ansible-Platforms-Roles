@@ -25,15 +25,27 @@
     - mysql
     - { role: php, tags: [php, tools] }
     - { role: docker, when: docker }
+    - { role: suitecrm, tags: [suitecrm, tools] }
+# - name: Progile server
+#   hosts: progile_server
+#   remote_user: ubuntu
+#   vars_files:
+#     - vars.yml
+#   vars:
+#     taiga_secure: true
+#     docker: true
+#   roles:
+#     - { role: docker, when: docker }
+#     - { role: taiga, tags: ["docker", "taiga"] }
 
-- name: Progile server
-  hosts: progile_server
-  remote_user: ubuntu
-  vars_files:
-    - vars.yml
-  vars:
-    taiga_secure: true
-    docker: true
-  roles:
-    - { role: docker, when: docker }
-    - { role: taiga, tags: ["docker", "taiga"] }
+# - name: Salesforce Server
+#   hosts: salesforce_server
+#   become: true
+#   vars_files:
+#     - vars.yml
+#   roles:
+#     - nginx
+#     - mysql
+#     - { role: php, tags: [php, tools] }
+#     - { role: suitecrm, tags: [suitecrm, tools] }
+#     - { role: docker, when: docker }
