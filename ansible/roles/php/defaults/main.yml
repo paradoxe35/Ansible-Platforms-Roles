@@ -1,0 +1,3 @@
+---
+# defaults file for ansible/roles/php
+php_version: 7.4

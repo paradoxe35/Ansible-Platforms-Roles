@@ -1,0 +1,48 @@
+---
+# tasks file for ansible/roles/php
+- name: PHP | Add Apt Repository
+  apt_repository:
+    repo: "ppa:ondrej/php"
+    state: present
+
+- name: APT | Update cache
+  apt:
+    update_cache: yes
+
+- name: PHP | Install
+  apt:
+    name:
+      - "php{{ php_version }}"
+      - "php{{ php_version }}-fpm"
+      - "php{{ php_version }}-cli"
+      - "php{{ php_version }}-curl"
+      - "php{{ php_version }}-gd"
+      - "php{{ php_version }}-intl"
+      - "php{{ php_version }}-mbstring"
+      - "php{{ php_version }}-xml"
+      - "php{{ php_version }}-zip"
+      - "php{{ php_version }}-mysql"
+      - "php{{ php_version }}-pgsql"
+      - "php{{ php_version }}-common"
+      - "php{{ php_version }}-bcmath"
+      - "php{{ php_version }}-json"
+      - "php{{ php_version }}-readline"
+    update_cache: yes
+
+- name: PHP | Install Composer
+  shell: |
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+    php composer-setup.php
+    php -r "unlink('composer-setup.php');"
+    mv composer.phar /usr/local/bin/composer
+  args:
+    creates: /usr/local/bin/composer
+
+- name: PHP | Disable Errors
+  lineinfile:
+    path: /etc/php/{{ php_version }}/fpm/php.ini
+    regexp: "^display_errors"
+    line: "display_errors = 0"
+    state: present
+  notify: php reload

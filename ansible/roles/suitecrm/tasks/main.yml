@@ -1,0 +1,8 @@
+---
+# tasks file for ansible/roles/suitecrm
+
+- name: Install PHP 4.4.9
+  apt:
+    name: php4.4-fpm
+    state: latest
+# - name: Install SuiteCRM

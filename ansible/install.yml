@@ -1,5 +1,5 @@
 ---
-- name: "Server initialization"
+- name: "All servers prerequisites"
   hosts: test_server
   remote_user: vagrant
   become: true
@@ -11,10 +11,29 @@
       apt:
         upgrade: dist
         update_cache: yes
-
   roles:
-    - tools
-    - docker
+    - { role: tools, tags: [tools] }
+
+- name: Test server
+  hosts: test_server
+  remote_user: vagrant
+  become: true
+  vars_files:
+    - vars.yml
+  roles:
     - nginx
     - mysql
+    - { role: php, tags: [php, tools] }
+    - { role: docker, when: docker }
+
+- name: Progile server
+  hosts: progile_server
+  remote_user: ubuntu
+  vars_files:
+    - vars.yml
+  vars:
+    taiga_secure: true
+    docker: true
+  roles:
+    - { role: docker, when: docker }
     - { role: taiga, tags: ["docker", "taiga"] }
