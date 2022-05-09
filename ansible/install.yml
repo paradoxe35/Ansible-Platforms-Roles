@@ -24,8 +24,9 @@
     - nginx
     - mysql
     - { role: php, tags: [php, tools] }
+    - { role: nodejs, tags: [nodejs, tools], vars: { pm2: false } }
     - { role: docker, when: docker }
-    - { role: suitecrm, tags: [suitecrm, tools] }
+    - { role: suitecrm, tags: [suitecrm] }
 # - name: Progile server
 #   hosts: progile_server
 #   remote_user: ubuntu
@@ -41,6 +42,11 @@
 # - name: Salesforce Server
 #   hosts: salesforce_server
 #   become: true
+#   vars:
+#     suitecrm_db_name: suitecrm
+#     suitecrm_db_user: suitecrm
+#     suitecrm_db_pass: suitecrm
+#     suitecrm_db_host: localhost
 #   vars_files:
 #     - vars.yml
 #   roles:

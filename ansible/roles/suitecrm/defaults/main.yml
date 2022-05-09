@@ -1,2 +1,7 @@
 ---
 # defaults file for ansible/roles/suitecrm
+suitecrm_db_name: suitecrm
+suitecrm_db_user: suitecrm
+suitecrm_db_pass: suitecrm
+suitecrm_db_host: localhost
+suitecrm_download_url: https://suitecrm.com/files/147/SuiteCRM-8.1/618/SuiteCRM-8.1.0.zip

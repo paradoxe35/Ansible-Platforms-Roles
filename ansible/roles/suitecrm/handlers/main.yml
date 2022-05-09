@@ -1,8 +1,48 @@
 ---
 # handlers file for ansible/roles/suitecrm
 
-- name: PHP | Install
+- name: Wait for mysql port 3306 to become open on the host, don't start checking for 5 seconds
+  wait_for:
+    port: 3306
+    delay: 5
+    timeout: 30
+
+- name: SuiteCRM path variable
+  set_fact:
+    suitecrm_path: "/home/{{ ansible_user }}/suitecrm"
+
+- name: SuiteCRM | Database creation
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ suitecrm_db_name }}"
+    user: "{{ suitecrm_db_user }}"
+    password: "{{ suitecrm_db_pass }}"
+    host: "{{ suitecrm_db_host }}"
+    state: present
+
+- name: SuiteCRM | PHP Prerequisites
   apt:
     name:
-      - "php{{ php_version }}-fpm"
+      - "php{{ php_version }}-imap"
+      - "php{{ php_version }}-zlip"
+      - "php{{ php_version }}-pcre"
     update_cache: yes
+
+- name: SuiteCRM | Create suitecrm folder
+  file:
+    path: "{{ suitecrm_path }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+
+- name: SuiteCRM | Download suitecrm
+  unarchive:
+    src: "{{ suitecrm_download_url }}"
+    dest: "{{ suitecrm_path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0755"
+    remote_src: yes
+    creates: "{{ suitecrm_path }}/config_override.php"

@@ -28,7 +28,7 @@
     host_all: yes
     state: absent
 
-- name: Create database user with name 'bob' and password '12345' with all database privileges
+- name: Create database user with all database privileges
   community.mysql.mysql_user:
     name: root
     password: "{{ mysql_root_password }}"
