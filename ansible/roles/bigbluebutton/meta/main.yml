@@ -1,0 +1,23 @@
+galaxy_info:
+  author: icloudeng
+  description: Big blue button is a free and open source software for video conferencing.
+
+  license: MIT
+
+  min_ansible_version: "2.4"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags: []
+
+dependencies:
+  - role: thefinn93.letsencrypt
+    vars:
+      letsencrypt_webroot_path: "{{ bbb_ssl_webroot_path }}"
+      letsencrypt_email: "{{ bbb_ssl_email }}"
+      letsencrypt_cert_domains:
+        - "{{ bbb_server_name }}"
+      bbb_ssl_renewal_command_args: '--renew-hook "systemctl restart nginx"'
+    # when: bbb_configure_ssl == True

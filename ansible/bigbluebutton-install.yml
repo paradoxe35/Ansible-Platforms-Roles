@@ -1,0 +1,17 @@
+- hosts: bigroom_server
+  remote_user: ubuntu
+  become: True
+  become_user: root
+  become_method: sudo
+  vars_files:
+    - vars.yml
+  vars:
+    bbb_server_name: bigroom.icloudeng.xyz
+    bbb_configure_nat: True
+    bbb_install_demo: True
+    bbb_install_check: True
+    bbb_configure_ssl: True
+    bbb_ssl_email: "{{ system_email }}"
+  gather_facts: True
+  roles:
+    - role: ansible-bigbluebutton
