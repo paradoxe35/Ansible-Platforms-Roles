@@ -5,6 +5,10 @@ server {
     client_max_body_size 100M;
     charset utf-8;
 
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
     # Frontend
     location / {
         proxy_pass http://taiga-front/;

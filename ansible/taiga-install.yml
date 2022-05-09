@@ -1,0 +1,20 @@
+---
+- name: Progile server
+  hosts: progile_server
+  remote_user: ubuntu
+  become: true
+  vars_files:
+    - vars.yml
+  vars:
+    taiga_secure: true
+    taiga_domain: progile.icloudeng.com
+    docker: true
+  tasks:
+    - name: APT | Update & Upgrade
+      apt:
+        upgrade: dist
+        update_cache: yes
+  roles:
+    - tools
+    - docker
+    - taiga

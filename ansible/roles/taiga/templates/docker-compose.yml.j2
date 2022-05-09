@@ -9,7 +9,7 @@ x-environment:
   POSTGRES_HOST: taiga-db
   # Taiga settings
   TAIGA_SECRET_KEY: "taiga123"
-  TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == 'true' else '' }}"
+  TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}"
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
   # Email settings. Uncomment following lines and configure your SMTP server
@@ -85,8 +85,8 @@ services:
   taiga-front:
     image: taigaio/taiga-front:latest
     environment:
-      TAIGA_URL: "http{{ 's' if taiga_secure == 'true' else '' }}://{{ taiga_domain }}"
-      TAIGA_WEBSOCKETS_URL: "ws{{ 's' if taiga_secure == 'true' else '' }}://{{ taiga_domain }}"
+      TAIGA_URL: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}://{{ taiga_domain }}"
+      TAIGA_WEBSOCKETS_URL: "ws{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}://{{ taiga_domain }}"
       TAIGA_SUBPATH: "" # "" or "/subpath"
     networks:
       - taiga
@@ -130,9 +130,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./taiga-gateway/taiga.conf:/etc/nginx/conf.d/default.conf
-      - ./certbot/www:/var/www/certbot/
-      - ./certbot/conf/:/etc/nginx/ssl/
+      - ./taiga-gateway/taiga.conf:/etc/nginx/conf.d/default.conf/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
       - taiga-static-data:/taiga/static
       - taiga-media-data:/taiga/media
     networks:
@@ -144,8 +144,8 @@ services:
   certbot:
     image: certbot/certbot:latest
     volumes:
-      - ./certbot/www/:/var/www/certbot/
-      - ./certbot/conf/:/etc/letsencrypt/
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
 volumes:
   taiga-static-data:

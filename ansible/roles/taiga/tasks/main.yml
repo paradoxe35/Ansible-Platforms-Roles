@@ -1,5 +1,11 @@
 ---
 # tasks file for ansible/roles/taiga
+- name: Outils | Remove certbot if exists
+  apt:
+    name:
+      - certbot
+    update_cache: yes
+    state: absent
 
 - name: Taiga | Create taiga-config folder
   file:
@@ -8,61 +14,69 @@
     recurse: yes
     mode: 0755
 
-- name: Taiga | docker compose template
+- name: Taiga SSL Config | well-known conf default
+  set_fact:
+    taiga_is_secure: false
+
+- name: Taiga | docker compose template with no secure
   template:
     src: "../templates/docker-compose.yml.j2"
     dest: "/home/{{ ansible_user }}/taiga-config/docker-compose.yml"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: "0755"
     force: yes
 
-- name: Taiga | taiga conf with ssl template
-  template:
-    src: "../templates/taiga-secure.conf.j2"
-    dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0755"
-    force: yes
-  when: taiga_secure == true
-
-- name: Taiga | taiga conf without ssl template
+- name: Taiga | insecure conf template
   template:
     src: "../templates/taiga-insecure.conf.j2"
     dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: "0755"
     force: yes
-  when: taiga_secure == false
 
 - name: Taiga | Docker compose create and start services
-  become: true
   community.docker.docker_compose:
     project_src: "/home/{{ ansible_user }}/taiga-config"
     project_name: taiga
     files:
       - docker-compose.yml
+    state: present
   register: output
 
 - debug:
     var: output
 
 - name: Taiga | generate ssh certificate
-  become: true
-  shell: docker-compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} --email {{ system_email }} --agree-tos --no-eff-email --no-redirect --no-self-upgrade --rsa-key-size 4096 --force-renewal
+  command: "docker-compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }}"
   args:
     chdir: "/home/{{ ansible_user }}/taiga-config"
     creates: "/home/{{ ansible_user }}/taiga-config/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
   when: taiga_secure == true
 
+- name: Taiga | taiga ssl conf template
+  template:
+    src: "../templates/taiga-secure.conf.j2"
+    dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
+    mode: "0755"
+    force: yes
+  when: taiga_secure == true
+
+- name: Taiga SSL Config | well-known conf default
+  set_fact:
+    taiga_is_secure: true
+  when: taiga_secure == true
+
+- name: Taiga | docker compose template with ssl enabled
+  template:
+    src: "../templates/docker-compose.yml.j2"
+    dest: "/home/{{ ansible_user }}/taiga-config/docker-compose.yml"
+    mode: "0755"
+    force: yes
+  when: taiga_secure == true
+
 - name: Taiga | Docker compose recreate services
-  become: true
   community.docker.docker_compose:
     project_src: "/home/{{ ansible_user }}/taiga-config"
     project_name: taiga
     files:
       - docker-compose.yml
-    build: yes
+    recreate: always
   when: taiga_secure == true

@@ -1,12 +1,6 @@
 ---
 php_version: 7.4
 node_version: 16
-mysql_root_password: mysql_password
 system_email: installation@icloudeng.com
+mysql_root_password: mysql_password
 docker: false
-
-# taiga vars
-taiga_secure: false
-taiga_domain: taiga.example.com
-# suitecrm vars
-suitecrm_download_url: https://suitecrm.com/files/147/SuiteCRM-8.1/618/SuiteCRM-8.1.0.zip
