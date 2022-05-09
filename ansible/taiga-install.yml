@@ -16,5 +16,6 @@
         update_cache: yes
   roles:
     - tools
+    - firewall
     - docker
     - taiga

@@ -1,0 +1,32 @@
+---
+# tasks file for ansible/roles/firewall
+- name: Firewall | Install ufw
+  apt:
+    name:
+      - ufw
+    state: latest
+
+- name: Firewall | Policy
+  ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  with_items:
+    - { direction: incoming, policy: deny }
+    - { direction: outgoing, policy: allow }
+
+- name: Firewall | Port
+  ufw:
+    rule: limit
+    port: ssh
+
+- name: Firewall | http
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+  with_items:
+    - http
+    - https
+
+- name: Firewall | Activate
+  ufw:
+    state: enabled
