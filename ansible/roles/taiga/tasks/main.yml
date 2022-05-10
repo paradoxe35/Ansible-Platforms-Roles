@@ -38,6 +38,7 @@
     files:
       - docker-compose.yml
     state: present
+    recreate: always
   register: output
 
 - debug:
