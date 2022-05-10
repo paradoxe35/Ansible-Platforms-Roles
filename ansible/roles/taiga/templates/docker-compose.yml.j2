@@ -12,15 +12,17 @@ x-environment:
   TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}"
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
-  # Email settings. Uncomment following lines and configure your SMTP server
-  # EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
-  # DEFAULT_FROM_EMAIL: "no-reply@example.com"
-  # EMAIL_USE_TLS: "False"
-  # EMAIL_USE_SSL: "False"
-  # EMAIL_HOST: "smtp.host.example.com"
-  # EMAIL_PORT: 587
-  # EMAIL_HOST_USER: "user"
-  # EMAIL_HOST_PASSWORD: "password"
+  # Email settings.
+{%- if taiga_email_enabled -%}
+  EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
+  DEFAULT_FROM_EMAIL: "{{ taiga_email_from }}"
+  EMAIL_USE_TLS: "{{ taiga_email_use_tls }}"
+  EMAIL_USE_SSL: "{{ taiga_email_use_ssl }}"
+  EMAIL_HOST: "{{ taiga_email_host }}"
+  EMAIL_PORT: {{ taiga_email_port }}
+  EMAIL_HOST_USER: "{{ taiga_email_username }}"
+  EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
+{%- endif -%}
   # Rabbitmq settings
   # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
   RABBITMQ_USER: taiga
@@ -32,7 +34,8 @@ x-volumes:
   &default-back-volumes
   - taiga-static-data:/taiga-back/static
   - taiga-media-data:/taiga-back/media
-  # - ./config.py:/taiga-back/settings/config.py
+  # - ./settings:/taiga-back/settings
+  # - ./settings/config.py:/taiga-back/settings/config.py
 
 
 services:
