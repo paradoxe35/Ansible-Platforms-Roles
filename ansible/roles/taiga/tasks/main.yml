@@ -97,3 +97,15 @@
     path: "{{ taiga_directory }}/taiga_superuser_created.txt"
     state: touch
     mode: 0755
+
+# - name: Delete all containers
+#   tags: delete_containers
+#   community.docker.docker_compose:
+#     project_src: "{{ taiga_directory }}"
+#     project_name: taiga
+#     files:
+#       - docker-compose.yml
+#     remove_volumes: yes
+#     remove_images: all
+#     remove_orphans: yes
+#     state: absent
