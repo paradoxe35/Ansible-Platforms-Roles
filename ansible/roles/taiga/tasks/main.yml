@@ -1,15 +1,14 @@
 ---
 # tasks file for ansible/roles/taiga
-- name: Outils | Remove certbot if exists
-  apt:
-    name:
-      - certbot
-    update_cache: yes
-    state: absent
+
+- name: Taiga | remote directory
+  tags: [taiga_superuser, delete_containers]
+  set_fact:
+    taiga_directory: "/home/{{ ansible_user }}/taiga-config"
 
 - name: Taiga | Create taiga-config folder
   file:
-    path: "/home/{{ ansible_user }}/taiga-config/taiga-gateway"
+    path: "{{ taiga_directory }}/taiga-gateway"
     state: directory
     recurse: yes
     mode: 0755
@@ -21,20 +20,20 @@
 - name: Taiga | docker compose template with no secure
   template:
     src: "../templates/docker-compose.yml.j2"
-    dest: "/home/{{ ansible_user }}/taiga-config/docker-compose.yml"
+    dest: "{{ taiga_directory }}/docker-compose.yml"
     mode: "0755"
     force: yes
 
 - name: Taiga | insecure conf template
   template:
     src: "../templates/taiga-insecure.conf.j2"
-    dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
+    dest: "{{ taiga_directory }}/taiga-gateway/taiga.conf"
     mode: "0755"
     force: yes
 
 - name: Taiga | Docker compose create and start services
   community.docker.docker_compose:
-    project_src: "/home/{{ ansible_user }}/taiga-config"
+    project_src: "{{ taiga_directory }}"
     project_name: taiga
     files:
       - docker-compose.yml
@@ -47,14 +46,14 @@
 - name: Taiga | generate ssh certificate
   command: "docker-compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }}"
   args:
-    chdir: "/home/{{ ansible_user }}/taiga-config"
-    creates: "/home/{{ ansible_user }}/taiga-config/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
+    chdir: "{{ taiga_directory }}"
+    creates: "{{ taiga_directory }}/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
   when: taiga_secure == true
 
 - name: Taiga | taiga ssl conf template
   template:
     src: "../templates/taiga-secure.conf.j2"
-    dest: "/home/{{ ansible_user }}/taiga-config/taiga-gateway/taiga.conf"
+    dest: "{{ taiga_directory }}/taiga-gateway/taiga.conf"
     mode: "0755"
     force: yes
   when: taiga_secure == true
@@ -67,16 +66,34 @@
 - name: Taiga | docker compose template with ssl enabled
   template:
     src: "../templates/docker-compose.yml.j2"
-    dest: "/home/{{ ansible_user }}/taiga-config/docker-compose.yml"
+    dest: "{{ taiga_directory }}/docker-compose.yml"
     mode: "0755"
     force: yes
   when: taiga_secure == true
 
 - name: Taiga | Docker compose recreate services
   community.docker.docker_compose:
-    project_src: "/home/{{ ansible_user }}/taiga-config"
+    project_src: "{{ taiga_directory }}"
     project_name: taiga
     files:
       - docker-compose.yml
     recreate: always
   when: taiga_secure == true
+
+- name: Taiga | Create Super user
+  tags: taiga_superuser
+  ignore_errors: true
+  expect:
+    chdir: "{{ taiga_directory }}"
+    command: "docker exec -it taiga-back python manage.py createsuperuser --username {{ taiga_superuser_username }} --email {{ taiga_superuser_email }}"
+    echo: true
+    creates: "{{ taiga_directory }}/taiga_superuser_created.txt"
+    responses:
+      "Password": "{{ taiga_superuser_password }}"
+      "Password (again)": "{{ taiga_superuser_password }}"
+
+- name: Taiga | superuser created file
+  file:
+    path: "{{ taiga_directory }}/taiga_superuser_created.txt"
+    state: touch
+    mode: 0755

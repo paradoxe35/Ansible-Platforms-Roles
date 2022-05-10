@@ -8,9 +8,13 @@
   vars:
     taiga_secure: true
     taiga_domain: progile.icloudeng.com
+    taiga_superuser_password: Platform@icloudeng.com-202109
+    taiga_superuser_username: Installation
+    taiga_superuser_email: installation@gmail.com
     docker: true
-  tasks:
+  pre_tasks:
     - name: APT | Update & Upgrade
+      become: true
       apt:
         upgrade: dist
         update_cache: yes
