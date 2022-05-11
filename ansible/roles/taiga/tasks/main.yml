@@ -1,6 +1,5 @@
 ---
 # tasks file for ansible/roles/taiga
-
 - name: Taiga | remote directory
   tags: [taiga_superuser, delete_containers]
   set_fact:
@@ -32,12 +31,9 @@
     force: yes
 
 - name: Taiga | Docker compose create and start services
-  community.docker.docker_compose:
-    project_src: "{{ taiga_directory }}"
-    project_name: taiga
-    files:
-      - docker-compose.yml
-    state: present
+  command: "docker-compose -f docker-compose.yml up -d"
+  args:
+    chdir: "{{ taiga_directory }}"
   register: output
 
 - debug:
@@ -72,20 +68,17 @@
   when: taiga_secure == true
 
 - name: Taiga | Docker compose recreate services
-  community.docker.docker_compose:
-    project_src: "{{ taiga_directory }}"
-    project_name: taiga
-    files:
-      - docker-compose.yml
-    recreate: always
+  command: "docker-compose -f docker-compose.yml up -d --force-recreate"
+  args:
+    chdir: "{{ taiga_directory }}"
+  register: output
   when: taiga_secure == true
 
 - name: Taiga | Create Super user
   tags: taiga_superuser
-  ignore_errors: true
   expect:
     chdir: "{{ taiga_directory }}"
-    command: "docker exec -it taiga-back python manage.py createsuperuser --username {{ taiga_superuser_username }} --email {{ taiga_superuser_email }}"
+    command: "docker-compose exec taiga-back python manage.py createsuperuser --username {{ taiga_superuser_username }} --email {{ taiga_superuser_email }}"
     echo: true
     creates: "{{ taiga_directory }}/taiga_superuser_created.txt"
     responses:
@@ -97,15 +90,3 @@
     path: "{{ taiga_directory }}/taiga_superuser_created.txt"
     state: touch
     mode: 0755
-
-# - name: Delete all containers
-#   tags: delete_containers
-#   community.docker.docker_compose:
-#     project_src: "{{ taiga_directory }}"
-#     project_name: taiga
-#     files:
-#       - docker-compose.yml
-#     remove_volumes: yes
-#     remove_images: all
-#     remove_orphans: yes
-#     state: absent
