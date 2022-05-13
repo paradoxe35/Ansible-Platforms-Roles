@@ -12,7 +12,8 @@
     update_cache: yes
 
 - name: Gitlab | Add the package repository
-  shell: curl "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash"
+  become: true
+  shell: curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
   args:
     creates: /etc/apt/sources.list.d/gitlab_gitlab-ee.list
 
@@ -42,8 +43,9 @@
 
 # Install Gitlab runner
 - name: Gitlab Runner | Add the package repository
+  become: true
   tags: install_gitlab_runner
-  shell: curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | bash"
+  shell: curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
   args:
     creates: /etc/apt/sources.list.d/runner_gitlab-runner.list
   when: gitlab_runner == true

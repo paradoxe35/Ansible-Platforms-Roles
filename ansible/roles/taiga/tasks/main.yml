@@ -1,7 +1,7 @@
 ---
 # tasks file for ansible/roles/taiga
 - name: Taiga | remote directory
-  tags: [taiga_superuser, delete_containers]
+  tags: [taiga_superuser, delete_containers, taiga_ldap]
   set_fact:
     taiga_directory: "/home/{{ ansible_user }}/taiga-config"
 
@@ -36,8 +36,9 @@
     chdir: "{{ taiga_directory }}"
   register: output
 
-- debug:
-    var: output
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
 
 - name: Taiga | generate ssh certificate
   command: "docker-compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }}"
@@ -74,19 +75,49 @@
   register: output
   when: taiga_secure == true
 
+- name: Sleep for 10 seconds and continue with play
+  wait_for:
+    timeout: 10
+
+- name: Taiga | Check super exists
+  tags: [taiga_superuser]
+  expect:
+    chdir: "{{ taiga_directory }}"
+    echo: true
+    command: 'docker-compose exec taiga-db psql -U taiga -d taiga --command "select email from users_user"'
+    responses:
+      "Password": "taiga"
+  register: user_exists
+
 - name: Taiga | Create Super user
   tags: taiga_superuser
   expect:
     chdir: "{{ taiga_directory }}"
     command: "docker-compose exec taiga-back python manage.py createsuperuser --username {{ taiga_superuser_username }} --email {{ taiga_superuser_email }}"
     echo: true
-    creates: "{{ taiga_directory }}/taiga_superuser_created.txt"
     responses:
       "Password": "{{ taiga_superuser_password }}"
       "Password (again)": "{{ taiga_superuser_password }}"
+  when: "user_exists.stdout.find(taiga_superuser_email) == -1"
 
-- name: Taiga | superuser created file
-  file:
-    path: "{{ taiga_directory }}/taiga_superuser_created.txt"
-    state: touch
-    mode: 0755
+# Taiga config
+- name: Taiga Config | setting volume name
+  tags: taiga_config
+  set_fact:
+    taiga_setting_volume: "taiga-config_taiga-settings"
+
+- name: Taiga Config | Docker Inspect taiga-settings volume
+  tags: taiga_config
+  shell: "docker volume inspect {{ taiga_setting_volume }}"
+  register: setting_volume_info
+
+- name: Taiga Config | Parse setting volume info
+  tags: taiga_config
+  set_fact:
+    taiga_setting_volume_mount_point: "{{ (setting_volume_info.stdout | from_json)[0].Mountpoint }}"
+
+# Taiga LDAP
+
+- name: Taiga | LDAP
+  tags: taiga_ldap
+  import_tasks: taiga_ldap.yml

@@ -16,8 +16,8 @@ x-environment:
 {%- if taiga_email_enabled -%}
   EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
   DEFAULT_FROM_EMAIL: "{{ taiga_email_from }}"
-  EMAIL_USE_TLS: "{{ taiga_email_use_tls }}"
-  EMAIL_USE_SSL: "{{ taiga_email_use_ssl }}"
+  EMAIL_USE_TLS: {{ taiga_email_use_tls }}
+  EMAIL_USE_SSL: {{ taiga_email_use_ssl }}
   EMAIL_HOST: "{{ taiga_email_host }}"
   EMAIL_PORT: {{ taiga_email_port }}
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
@@ -32,8 +32,10 @@ x-environment:
 
 x-volumes:
   &default-back-volumes
-  - taiga-static-data:/taiga-back/static
-  - taiga-media-data:/taiga-back/media
+    - taiga-static-data:/taiga-back/static
+    - taiga-media-data:/taiga-back/media
+    - taiga-settings:/taiga-back/settings
+    - taiga-lib:/opt/venv/lib/
   # - ./settings:/taiga-back/settings
   # - ./settings/config.py:/taiga-back/settings/config.py
 
@@ -157,6 +159,8 @@ volumes:
   taiga-db-data:
   taiga-async-rabbitmq-data:
   taiga-events-rabbitmq-data:
+  taiga-settings:
+  taiga-lib:
 
 networks:
   taiga:
