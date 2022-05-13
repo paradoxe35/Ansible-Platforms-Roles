@@ -1,0 +1,77 @@
+---
+# tasks file for ansible/roles/gitlab
+- name: Gitlab | Prerequisites
+  apt:
+    name:
+      - curl
+      - openssh-server
+      - ca-certificates
+      - tzdata
+      - perl
+    state: latest
+    update_cache: yes
+
+- name: Gitlab | Add the package repository
+  shell: curl "https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash"
+  args:
+    creates: /etc/apt/sources.list.d/gitlab_gitlab-ee.list
+
+- name: Gitlab | Update the package repository
+  apt:
+    update_cache: yes
+
+- name: Gitlab | Install the package (https)
+  tags: install_gitlab
+  apt:
+    name: gitlab-ee
+    state: present
+  when: gitlab_secure == true
+  notify: show default password
+  environment:
+    EXTERNAL_URL: "https://{{ gitlab_domain }}"
+
+- name: Gitlab | Install the package (http)
+  tags: install_gitlab
+  apt:
+    name: gitlab-ee
+    state: present
+  when: gitlab_secure == false
+  notify: show default password
+  environment:
+    EXTERNAL_URL: "http://{{ gitlab_domain }}"
+
+# Install Gitlab runner
+- name: Gitlab Runner | Add the package repository
+  tags: install_gitlab_runner
+  shell: curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | bash"
+  args:
+    creates: /etc/apt/sources.list.d/runner_gitlab-runner.list
+  when: gitlab_runner == true
+
+- name: Gitlab Runner | Update the package repository
+  tags: install_gitlab_runner
+  apt:
+    update_cache: yes
+  when: gitlab_runner == true
+
+- name: Gitlab Runner | Install the package
+  tags: install_gitlab_runner
+  apt:
+    name: gitlab-runner
+    state: present
+  when: gitlab_runner == true
+
+- name: Gitlab | Email config
+  tags: [gitlab_configuration, email_config]
+  import_tasks: email_config.yml
+  when: gitlab_configuration == true
+
+- name: Gitlab | LDAP config
+  tags: [gitlab_configuration, ldap_config]
+  import_tasks: ldap_config.yml
+  when: gitlab_configuration == true
+
+- name: Gitlab | gitlab-ctl reconfigure
+  tags: [gitlab_configuration, gitlab_ctl_reconfigure, ldap_config]
+  shell: gitlab-ctl reconfigure
+  when: gitlab_configuration == true

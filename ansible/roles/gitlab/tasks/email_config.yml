@@ -1,0 +1,136 @@
+# Email configuration
+- name: Gitlab Config | smtp_enable
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_enable\'\] .*)
+    line: "gitlab_rails['smtp_enable'] = true"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_address
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_address\'\] .*)
+    line: "gitlab_rails['smtp_address'] = '{{ gitlab_email_host }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_port
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_port\'\] .*)
+    line: "gitlab_rails['smtp_port'] = {{ gitlab_email_port }}"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_user_name
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_user_name\'\] .*)
+    line: "gitlab_rails['smtp_user_name'] = '{{ gitlab_email_username }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_password
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_password\'\] .*)
+    line: "gitlab_rails['smtp_password'] = '{{ gitlab_email_password }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_domain
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_domain\'\] .*)
+    line: "gitlab_rails['smtp_domain'] = '{{ gitlab_email_host }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_authentication
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_authentication\'\] .*)
+    line: "gitlab_rails['smtp_authentication'] = 'login'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_enable_starttls_auto
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_enable_starttls_auto\'\] .*)
+    line: "gitlab_rails['smtp_enable_starttls_auto'] = {{ 'true' if gitlab_email_enable_starttls_auto else 'false' }}"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_tls
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_tls\'\] .*)
+    line: "gitlab_rails['smtp_tls'] = {{ 'true' if gitlab_email_use_tls else 'false' }}"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_pool
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_pool\'\] .*)
+    line: "gitlab_rails['smtp_pool'] = true"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | smtp_openssl_verify_mode
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'smtp_openssl_verify_mode\'\] .*)
+    line: "gitlab_rails['smtp_openssl_verify_mode'] = 'none'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+# Email From
+- name: Gitlab Config | gitlab_email_enabled
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'gitlab_email_enabled\'\] .*)
+    line: "gitlab_rails['gitlab_email_enabled'] = true"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | gitlab_email_from
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'gitlab_email_from\'\] .*)
+    line: "gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | gitlab_email_display_name
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'gitlab_email_display_name\'\] .*)
+    line: "gitlab_rails['gitlab_email_display_name'] = '{{ gitlab_email_display_name }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true
+
+- name: Gitlab Config | gitlab_email_reply_to
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'gitlab_email_reply_to\'\] .*)
+    line: "gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_email_enabled == true

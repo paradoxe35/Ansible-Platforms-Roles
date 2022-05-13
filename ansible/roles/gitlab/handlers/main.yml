@@ -1,0 +1,10 @@
+---
+# handlers file for ansible/roles/gitlab
+
+- name: show default password
+  shell: cat /etc/gitlab/initial_root_password
+  register: command_output
+
+- name: Print to console
+  debug:
+    msg: "{{command_output.stdout}}"

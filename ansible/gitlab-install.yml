@@ -1,0 +1,44 @@
+---
+- name: Gitlab server
+  hosts: devops_server
+  remote_user: ubuntu
+  become: true
+  vars_files:
+    - vars.yml
+  vars:
+    docker: false
+    gitlab_secure: true
+    gitlab_runner: false
+    gitlab_configuration: true
+    gitlab_domain: devops.icloudeng.com
+    # Email variables
+    gitlab_email_enabled: true
+    gitlab_email_host: "mail.icloudeng.com"
+    gitlab_email_port: 587
+    gitlab_email_username: "gitlab@icloudeng.com"
+    gitlab_email_password: "Infra@icloudeng.com-092021"
+    gitlab_email_use_tls: false
+    gitlab_email_enable_starttls_auto: true
+    # Email From
+    gitlab_email_from: gitlab@icloudeng.com
+    gitlab_email_display_name: Icloudeng Gitlab
+    gitlab_email_reply_to: noreply@icloudeng.com
+    # LDAP variables
+    gitlab_ldap_enabled: true
+    gitlab_ldap_host: "ldap.icloudeng.com"
+    gitlab_ldap_port: 389
+    gitlab_ldap_use_ssl: false
+    gitlab_ldap_bind_dn: "cn=admin,dc=icloudeng,dc=com"
+    gitlab_ldap_bind_password: "Platform@icloudeng.com-202109"
+    gitlab_ldap_base_dn: "dc=icloudeng, dc=com"
+    gitlab_ldap_user_filter: "(objectclass=*)"
+  pre_tasks:
+    - name: APT | Update & Upgrade
+      become: true
+      apt:
+        upgrade: dist
+        update_cache: yes
+  roles:
+    - tools
+    - firewall
+    - { role: gitlab, tags: gitlab }
