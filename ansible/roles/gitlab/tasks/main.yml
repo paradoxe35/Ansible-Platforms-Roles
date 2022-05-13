@@ -63,6 +63,16 @@
     state: present
   when: gitlab_runner == true
 
+- name: Gitlab | gitlab_initial_root_password
+  tags: [gitlab_configuration]
+  lineinfile:
+    path: /etc/gitlab/gitlab.rb
+    regexp: (^\#\sgitlab_rails\[\'initial_root_password\'\] .*)
+    line: "gitlab_rails['initial_root_password'] = '{{ gitlab_initial_root_password }}'"
+    backrefs: yes
+    state: present
+  when: gitlab_configuration == true
+
 - name: Gitlab | Email config
   tags: [gitlab_configuration, email_config]
   import_tasks: email_config.yml

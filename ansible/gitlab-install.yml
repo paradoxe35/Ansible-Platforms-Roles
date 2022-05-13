@@ -11,6 +11,7 @@
     gitlab_runner: false
     gitlab_configuration: true
     gitlab_domain: devops.icloudeng.com
+    gitlab_initial_root_password: Platform@icloudeng.com-202109
     # Email variables
     gitlab_email_enabled: true
     gitlab_email_host: "mail.icloudeng.com"
