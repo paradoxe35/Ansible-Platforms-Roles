@@ -33,6 +33,8 @@ x-environment:
   RABBITMQ_PASS: taiga
   # Telemetry settings
   ENABLE_TELEMETRY: "True"
+  EVENTS_PUSH_BACKEND_URL: "amqp://taiga:taiga@taiga-events-rabbitmq:5672/taiga"
+  CELERY_BROKER_URL: "amqp://taiga:taiga@taiga-async-rabbitmq:5672/ta
 
 x-volumes:
   &default-back-volumes
