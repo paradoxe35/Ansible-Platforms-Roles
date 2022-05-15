@@ -13,8 +13,7 @@ x-environment:
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
   # Email settings.
-
-{%- if taiga_email_enabled -%}
+{% if taiga_email_enabled %}
   EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
   DEFAULT_FROM_EMAIL: "{{ taiga_email_from }}"
   EMAIL_USE_TLS: "{{ taiga_email_use_tls }}"
@@ -24,11 +23,9 @@ x-environment:
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
   EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
   TAIGA_NOTIFICATIONS_INTERVAL: 160 # 0 to disable
-{%- endif -%}
-
+{% endif %}
   # Front config
   # TAIGA_LOGIN_FORM_TYPE="normal"
-
   # Rabbitmq settings
   # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
   RABBITMQ_USER: taiga
