@@ -99,8 +99,8 @@ services:
       TAIGA_SUBPATH: "" # "" or "/subpath"
     networks:
       - taiga
-    # volumes:
-    #   - taiga-front-config:/usr/share/nginx/html/
+    volumes:
+      - taiga-front-config:/usr/share/nginx/html/
 
   taiga-events:
     image: taigaio/taiga-events:latest
