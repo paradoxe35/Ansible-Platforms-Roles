@@ -24,11 +24,8 @@ x-environment:
   EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
 {%- endif -%}
   # Front config
-{%- if taiga_ldap_enabled -%}
-  TAIGA_LOGIN_FORM_TYPE="ldap"
-{%- else -%}
-  TAIGA_LOGIN_FORM_TYPE="normal"
-{%- endif -%}
+  # TAIGA_LOGIN_FORM_TYPE="normal"
+
   # Rabbitmq settings
   # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
   RABBITMQ_USER: taiga

@@ -14,7 +14,7 @@
     taiga_superuser_email: installation@icloudeng.com
     # Email variables
     taiga_email_enabled: true
-    taiga_email_from: "{{ taiga_superuser_email }}"
+    taiga_email_from: "taiga@icloudeng.com"
     taiga_email_host: "mail.icloudeng.com"
     taiga_email_port: 587
     taiga_email_username: "{{ taiga_superuser_email }}"
