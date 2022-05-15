@@ -12,6 +12,7 @@ x-environment:
   TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}"
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
+
   # Email settings.
 {%- if taiga_email_enabled -%}
   EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
@@ -22,8 +23,9 @@ x-environment:
   EMAIL_PORT: {{ taiga_email_port }}
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
   EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
-  TAIGA_NOTIFICATIONS_INTERVAL: 0
+  TAIGA_NOTIFICATIONS_INTERVAL: 30 # 0 to disable
 {%- endif -%}
+
   # Front config
   # TAIGA_LOGIN_FORM_TYPE="normal"
 
