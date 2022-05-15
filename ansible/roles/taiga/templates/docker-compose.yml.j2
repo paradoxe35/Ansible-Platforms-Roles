@@ -12,8 +12,8 @@ x-environment:
   TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}"
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
-
   # Email settings.
+
 {%- if taiga_email_enabled -%}
   EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
   DEFAULT_FROM_EMAIL: "{{ taiga_email_from }}"
@@ -23,7 +23,7 @@ x-environment:
   EMAIL_PORT: {{ taiga_email_port }}
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
   EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
-  TAIGA_NOTIFICATIONS_INTERVAL: 30 # 0 to disable
+  TAIGA_NOTIFICATIONS_INTERVAL: 160 # 0 to disable
 {%- endif -%}
 
   # Front config
@@ -35,8 +35,6 @@ x-environment:
   RABBITMQ_PASS: taiga
   # Telemetry settings
   ENABLE_TELEMETRY: "True"
-  EVENTS_PUSH_BACKEND_URL: "amqp://taiga:taiga@taiga-events-rabbitmq:5672/taiga"
-  CELERY_BROKER_URL: "amqp://taiga:taiga@taiga-async-rabbitmq:5672/taiga"
 
 x-volumes:
   &default-back-volumes
