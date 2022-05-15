@@ -1,0 +1,49 @@
+- name: Taiga | tags front config volume name
+  set_fact:
+    taiga_front_config_volume: "taiga-config_taiga-front-config"
+
+- name: Taiga | Docker Inspect taiga-front-config volume
+  shell: "docker volume inspect {{ taiga_front_config_volume }}"
+  register: front_config_volume_info
+
+- name: Taiga | Parse front-config volume info
+  set_fact:
+    taiga_front_config_volume_mount_point: "{{ (front_config_volume_info.stdout | from_json)[0].Mountpoint }}"
+
+- name: Taiga front-config volume Mountpoint
+  debug:
+    msg: "{{ taiga_front_config_volume_mount_point }}"
+
+- name: Taiga | front conf.json path
+  set_fact:
+    front_config_path: "{{ taiga_front_config_volume_mount_point }}/conf.json"
+
+# config secure protocal
+- name: "Taiga | Add https protocol"
+  ansible.builtin.replace:
+    path: "{{ front_config_path }}"
+    regexp: http\:\/\/
+    replace: "https://"
+  when: taiga_secure == true
+
+- name: "Taiga | Add wss protocol"
+  ansible.builtin.replace:
+    path: "{{ front_config_path }}"
+    regexp: ws\:\/\/
+    replace: "wss://"
+  when: taiga_secure == true
+
+# config loginFormType
+- name: Taiga | add loginFormType to ldap if enabled
+  lineinfile:
+    path: "{{ front_config_path }}"
+    firstmatch: yes
+    insertafter: "{"
+    line: '    "loginFormType": "ldap",'
+    state: present
+  when: taiga_ldap_enabled == true
+
+- name: "Taiga | Restart docker services"
+  command: "docker-compose restart"
+  args:
+    chdir: "{{ taiga_directory }}"

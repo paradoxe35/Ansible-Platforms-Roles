@@ -16,8 +16,8 @@ x-environment:
 {%- if taiga_email_enabled -%}
   EMAIL_BACKEND: "django.core.mail.backends.smtp.EmailBackend"
   DEFAULT_FROM_EMAIL: "{{ taiga_email_from }}"
-  EMAIL_USE_TLS: {{ taiga_email_use_tls }}
-  EMAIL_USE_SSL: {{ taiga_email_use_ssl }}
+  EMAIL_USE_TLS: "{{ taiga_email_use_tls }}"
+  EMAIL_USE_SSL: "{{ taiga_email_use_ssl }}"
   EMAIL_HOST: "{{ taiga_email_host }}"
   EMAIL_PORT: {{ taiga_email_port }}
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
@@ -96,8 +96,8 @@ services:
       TAIGA_SUBPATH: "" # "" or "/subpath"
     networks:
       - taiga
-    # volumes:
-    #   - ./conf.json:/usr/share/nginx/html/conf.json
+    volumes:
+      - taiga-front-config:/usr/share/nginx/html/
 
   taiga-events:
     image: taigaio/taiga-events:latest
@@ -161,6 +161,7 @@ volumes:
   taiga-events-rabbitmq-data:
   taiga-settings:
   taiga-lib:
+  taiga-front-config:
 
 networks:
   taiga:

@@ -1,7 +1,7 @@
 ---
 # tasks file for ansible/roles/taiga
 - name: Taiga | remote directory
-  tags: [taiga_superuser, delete_containers, taiga_ldap]
+  tags: [taiga_superuser, taiga_ldap, taiga_front_config]
   set_fact:
     taiga_directory: "/home/{{ ansible_user }}/taiga-config"
 
@@ -100,24 +100,13 @@
       "Password (again)": "{{ taiga_superuser_password }}"
   when: "user_exists.stdout.find(taiga_superuser_email) == -1"
 
-# Taiga config
-- name: Taiga Config | setting volume name
-  tags: taiga_config
-  set_fact:
-    taiga_setting_volume: "taiga-config_taiga-settings"
-
-- name: Taiga Config | Docker Inspect taiga-settings volume
-  tags: taiga_config
-  shell: "docker volume inspect {{ taiga_setting_volume }}"
-  register: setting_volume_info
-
-- name: Taiga Config | Parse setting volume info
-  tags: taiga_config
-  set_fact:
-    taiga_setting_volume_mount_point: "{{ (setting_volume_info.stdout | from_json)[0].Mountpoint }}"
-
 # Taiga LDAP
-
-- name: Taiga | LDAP
+- name: Taiga | LDAP Config
   tags: taiga_ldap
   import_tasks: taiga_ldap.yml
+  when: taiga_ldap_enabled == true
+
+# Taiga LDAP
+- name: Taiga | Front config
+  tags: [taiga_ldap, taiga_front_config]
+  import_tasks: taiga-front_config.yml

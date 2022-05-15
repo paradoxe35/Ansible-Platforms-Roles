@@ -1,0 +1,115 @@
+# Taiga config
+- name: Taiga Config | setting volume name
+  set_fact:
+    taiga_setting_volume: "taiga-config_taiga-settings"
+
+- name: Taiga Config | Docker Inspect taiga-settings volume
+  shell: "docker volume inspect {{ taiga_setting_volume }}"
+  register: setting_volume_info
+
+- name: Taiga Config | Parse setting volume info
+  set_fact:
+    taiga_setting_volume_mount_point: "{{ (setting_volume_info.stdout | from_json)[0].Mountpoint }}"
+
+- name: Taiga Settings volume Mountpoint
+  debug:
+    msg: "{{ taiga_setting_volume_mount_point }}"
+
+- name: Taiga | variable common.py path
+  set_fact:
+    taiga_common_path: "{{ taiga_setting_volume_mount_point }}/common.py"
+
+- name: Taiga | LDAP Package facts
+  set_fact:
+    ldap_package: "taiga-contrib-ldap-auth-ext"
+    ldap_package_name: "taiga_contrib_ldap_auth_ext"
+
+- name: "Taiga | Upgrade PIP"
+  become: true
+  command: "docker-compose exec taiga-back python -m pip install --upgrade pip"
+  args:
+    chdir: "{{ taiga_directory }}"
+  register: wp
+  failed_when: wp.rc not in [ 0, 1 ]
+  ignore_errors: true
+
+- name: "Taiga | install {{ ldap_package }} package"
+  become: true
+  command: "docker-compose exec taiga-back pip install {{ ldap_package }}"
+  args:
+    chdir: "{{ taiga_directory }}"
+  register: wp
+  failed_when: wp.rc not in [ 0, 1 ]
+
+- name: Taiga Copy extractor python script to remote folder
+  template:
+    src: "../templates/extractor-regex.py.j2"
+    dest: "{{ taiga_directory }}/extractor-regex.py"
+    mode: "0755"
+    force: yes
+
+- name: Taiga Get content of common.py remote file
+  slurp:
+    src: "{{ taiga_common_path }}"
+  register: common_content_encoded
+
+- name: Taiga extractor regex
+  set_fact:
+    extract_regex: '\bINSTALLED\_APPS(\s)?\+\=(\s)?\[(\s)?(.+)?|([^#\n]?).+\]\b'
+
+- name: Taiga Extract target contant from common
+  shell: python3 extractor-regex.py "{{ extract_regex }}" {{ common_content_encoded.content }}
+  args:
+    chdir: "{{ taiga_directory }}"
+  register: taiga_installed_apps
+
+- name: Taiga extractor regex
+  set_fact:
+    taiga_installed_apps_content: "{{ taiga_installed_apps.stdout | from_json }}"
+
+- name: Taiga package exists
+  set_fact:
+    taiga_package_exists: '{{ taiga_installed_apps_content["match"].find(''"''+ldap_package_name+''"'') != -1 }}'
+
+- name: Taige regex parsed fact
+  set_fact:
+    parsed_content: '{{ taiga_installed_apps_content["match"] }}, "{{ ldap_package_name }}"{{ taiga_installed_apps_content["endWith"] }}'
+  when: taiga_package_exists == false
+
+- name: Taiga INSTALLED_APP regex parsed
+  debug:
+    msg: "{{ parsed_content }}"
+  when: taiga_package_exists == false
+
+- name: "Taiga | Add {{ ldap_package_name }} to INSTALLED_APP"
+  ansible.builtin.replace:
+    path: "{{ taiga_common_path }}"
+    regexp: "{{ extract_regex }}"
+    replace: "{{ parsed_content }}"
+  when: taiga_package_exists == false
+#
+- name: Taiga Config | ldap_servers
+  blockinfile:
+    path: "{{ taiga_common_path }}"
+    insertbefore: (^INSTALLED_APPS(\s)?\+\=(\s)?.*)
+    block: |
+      LDAP_SERVER = "ldap://{{ taiga_ldap_host }}"
+      LDAP_PORT = {{ taiga_ldap_port }}
+      LDAP_BIND_DN = "{{ taiga_ldap_bind_dn }}"
+      LDAP_BIND_PASSWORD = "{{ taiga_ldap_bind_password }}"
+      LDAP_SEARCH_BASE = "{{ taiga_ldap_search_dn }}"
+      LDAP_USERNAME_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
+      LDAP_EMAIL_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
+      LDAP_FULL_NAME_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
+      LDAP_START_TLS = False
+      LDAP_ACTIVE_DIRECTORY = False
+      def _ldap_slugify(uid):
+          # example: force lower-case
+          #uid = uid.lower()
+          return uid
+    state: present
+
+- name: "Taiga | Restart docker services"
+  command: "docker-compose restart"
+  args:
+    chdir: "{{ taiga_directory }}"

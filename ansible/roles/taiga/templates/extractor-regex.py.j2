@@ -1,0 +1,26 @@
+import re
+import sys
+import base64
+import json
+
+
+def main():
+    regex = str(sys.argv[1])
+    text = base64.b64decode(sys.argv[2]).decode("utf-8")
+    result = re.finditer(rf"{regex}", text, flags=re.M)
+    match = [m for m in result][0]
+    match0 = match.group(0).strip()
+
+    data = json.dumps({
+        "match": match0[0:-1] if match0[-1] == ',' or match0[-1] == ']' else match0,
+        "group": match.group(4),
+        "start": match.start(),
+        "endWith": "]" if match0[-1] == ']' else "",
+        "end": match.end(),
+    })
+    print(data)
+    return 0
+
+
+if __name__ == "__main__":
+    main()
