@@ -23,6 +23,12 @@ x-environment:
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
   EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
 {%- endif -%}
+  # Front config
+{%- if taiga_ldap_enabled -%}
+  TAIGA_LOGIN_FORM_TYPE="ldap"
+{%- else -%}
+  TAIGA_LOGIN_FORM_TYPE="normal"
+{%- endif -%}
   # Rabbitmq settings
   # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
   RABBITMQ_USER: taiga
@@ -96,8 +102,8 @@ services:
       TAIGA_SUBPATH: "" # "" or "/subpath"
     networks:
       - taiga
-    volumes:
-      - taiga-front-config:/usr/share/nginx/html/
+    # volumes:
+    #   - taiga-front-config:/usr/share/nginx/html/
 
   taiga-events:
     image: taigaio/taiga-events:latest
