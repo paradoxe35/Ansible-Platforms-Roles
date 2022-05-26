@@ -1,9 +1,9 @@
 terminal:
   # This can be any image that has the necessary runtime environment for your project.
   image:
-    name: node:10-alpine
+    name: node:14-alpine
   tags:
-    - global
+    - webide
   services:
     - name: registry.gitlab.com/gitlab-org/webide-file-sync:latest
       alias: webide-file-sync
