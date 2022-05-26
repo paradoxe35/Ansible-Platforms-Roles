@@ -6,3 +6,4 @@ terminal:
   script: sleep 60
   tags:
     - global
+
