@@ -1,6 +1,6 @@
 terminal:
   # This can be any image that has the necessary runtime environment for your project.
-  python: node:3.9.13
+  image: python:3.9.13
   before_script:
     - apk update
   tags:
