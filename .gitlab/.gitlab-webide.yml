@@ -3,7 +3,7 @@ terminal:
   image: python:3.9
   script: sleep 60
   tags:
-    - global
+    - webide
   variables:
     RAILS_ENV: "test"
     NODE_ENV: "test"
