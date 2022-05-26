@@ -3,5 +3,6 @@ terminal:
   image: python:3.9.13
   before_script:
     - apk update
+  script: sleep 60
   tags:
     - global
