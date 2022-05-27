@@ -4,6 +4,8 @@ terminal:
   before_script:
     - apk update
   script: sleep 60
+  tags:
+    - webide
   variables:
     RAILS_ENV: "test"
     NODE_ENV: "test"
