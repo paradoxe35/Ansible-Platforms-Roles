@@ -110,3 +110,4 @@
 - name: Taiga | Front config
   tags: [taiga_ldap, taiga_front_config]
   import_tasks: taiga-front_config.yml
+  when: taiga_ldap_enabled == true

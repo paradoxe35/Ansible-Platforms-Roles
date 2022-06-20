@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "auto-server-installation"
+version = "0.1.0"
+description = ""
+authors = ["Paradoxe Ngwasi <35149259+paradoxe35@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+ansible = "^5.9.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
