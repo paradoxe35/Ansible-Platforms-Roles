@@ -106,8 +106,27 @@
   import_tasks: taiga_ldap.yml
   when: taiga_ldap_enabled == true
 
-# Taiga LDAP
+# Taiga Front Config
 - name: Taiga | Front config
   tags: [taiga_ldap, taiga_front_config]
   import_tasks: taiga-front_config.yml
+
+
+# Taiga login form type LDAP
+- name: Taiga | login form type LDAP
+  tags: [taiga_ldap, taiga_front_config]
+  import_tasks: login-form-type.yml
   when: taiga_ldap_enabled == true
+
+
+# Taiga Login gitlab
+- name: Taiga | Login gitlab
+  tags: [taiga_front_config]
+  import_tasks: login-gitlab.yml
+  when: taiga_gitlab_enabled == true
+
+# restart docker-compose
+- name: "Taiga | Restart docker services"
+  command: "docker-compose restart"
+  args:
+    chdir: "{{ taiga_directory }}"

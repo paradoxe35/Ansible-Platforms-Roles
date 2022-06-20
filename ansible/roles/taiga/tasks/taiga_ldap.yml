@@ -102,14 +102,10 @@
       LDAP_EMAIL_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
       LDAP_FULL_NAME_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
       LDAP_START_TLS = False
-      LDAP_ACTIVE_DIRECTORY = False
+      LDAP_FALLBACK = "normal"
+      LDAP_SEARCH_FILTER_ADDITIONAL = '(uid=*)'
       def _ldap_slugify(uid):
           # example: force lower-case
           #uid = uid.lower()
           return uid
     state: present
-
-- name: "Taiga | Restart docker services"
-  command: "docker-compose restart"
-  args:
-    chdir: "{{ taiga_directory }}"

@@ -1,3 +1,13 @@
+{% set shared_config = [
+  {"TAIGA_LOGIN_FORM_TYPE": taiga_login_form_type },
+  {"PUBLIC_REGISTER_ENABLED": taiga_public_register_enabled | bool },
+
+  {"ENABLE_GITLAB_AUTH": taiga_gitlab_enabled | bool },
+  {"GITLAB_API_CLIENT_ID": taiga_gitlab_api_client_id },
+  {"GITLAB_API_CLIENT_SECRET": taiga_gitlab_api_client_secret },
+  {"GITLAB_CLIENT_ID": taiga_gitlab_api_client_id },
+  {"GITLAB_URL": taiga_gitlab_url }
+] %}
 version: "3.5"
 
 x-environment:
@@ -23,14 +33,17 @@ x-environment:
   EMAIL_HOST_USER: "{{ taiga_email_username }}"
   EMAIL_HOST_PASSWORD: "{{ taiga_email_password }}"
 {% endif %}
-  # Front config
-  # TAIGA_LOGIN_FORM_TYPE="normal"
   # Rabbitmq settings
   # Should be the same as in taiga-async-rabbitmq and taiga-events-rabbitmq
   RABBITMQ_USER: taiga
   RABBITMQ_PASS: taiga
   # Telemetry settings
   ENABLE_TELEMETRY: "True"
+{% for config in shared_config %}
+{% for key, value in config.items() %}
+  {{ key }}: "{{ value }}"
+{% endfor %}
+{% endfor %}
 
 x-volumes:
   &default-back-volumes
@@ -96,6 +109,11 @@ services:
       TAIGA_URL: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}://{{ taiga_domain }}"
       TAIGA_WEBSOCKETS_URL: "ws{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}://{{ taiga_domain }}"
       TAIGA_SUBPATH: "" # "" or "/subpath"
+{% for config in shared_config %}
+{% for key, value in config.items() %}
+      {{ key }}: "{{ value | lower }}"
+{% endfor %}
+{% endfor %}
     networks:
       - taiga
     volumes:

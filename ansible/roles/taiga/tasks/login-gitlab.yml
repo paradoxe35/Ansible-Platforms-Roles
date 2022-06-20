@@ -1,0 +1,9 @@
+- name: Taiga Config | contribPlugins gitlab
+  lineinfile:
+    path: "{{ front_config_path }}"
+    firstmatch: yes
+    regexp: '.*\"contribPlugins\"\: \[.*\],$'
+    line: '    "contribPlugins": ["plugins/gitlab-auth/gitlab-auth.json"],'
+    create: no
+    state: present
+    backrefs: yes

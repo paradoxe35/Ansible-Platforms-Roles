@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Mon Jun 20 11:01:56 2022
+# Make data base, printed on Mon Jun 20 15:24:47 2022
 
 # Variables
 
@@ -42,7 +42,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-3474d247-6fad-45da-9f40-7adb70c8fd82.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-346a1662-4f89-4851-957e-2cdc5348198b.sock
 # environment
 VSCODE_CWD = /Users/icloudeng/Documents/projects/icloudeng/auto-server-installation
 # environment
@@ -170,9 +170,9 @@ VSCODE_PID = 97945
 
 # Directories
 
-# . (device 16777222, inode 18670829): 11 files, no impossibilities.
+# . (device 16777222, inode 18670829): 13 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -194,7 +194,7 @@ ansibe_playbook:
 #  Modification time never checked.
 #  File has not been updated.
 #  commands to execute (from `Makefile', line 2):
-	@ansible-playbook -i ansible/hosts ansible/install.yml
+	@poetry run ansible-playbook -i ansible/hosts ansible/install.yml
 	
 
 # Not a target:
@@ -206,7 +206,7 @@ ansibe_playbook:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-17 21:29:51
+#  Last modified 2022-06-20 11:33:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -218,8 +218,32 @@ Makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
+ansible_taiga_ldap:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 11):
+	@poetry run ansible-playbook -i ansible/hosts ansible/taiga-install.yml --tags "taiga_ldap"
+	
+
+ansible_taiga:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 5):
+	@poetry run ansible-playbook -i ansible/hosts ansible/taiga-install.yml
+	
+
+ansible_taiga_only:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 8):
+	@poetry run ansible-playbook -i ansible/hosts ansible/taiga-install.yml --tags "taiga"
+	
+
 # files hash-table stats:
-# Load=5/1024=0%, Rehash=0, Collisions=0/17=0%
+# Load=8/1024=1%, Rehash=0, Collisions=0/20=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -231,7 +255,7 @@ Makefile:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jun 20 11:01:56 2022
+# Finished Make data base on Mon Jun 20 15:24:47 2022
 
  
 make: *** No rule to make target `all'.  Stop.

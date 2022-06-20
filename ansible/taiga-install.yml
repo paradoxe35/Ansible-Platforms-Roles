@@ -7,6 +7,10 @@
     - vars.yml
   vars:
     docker: true
+    # Taiga Global vars
+    taiga_login_form_type: "normal"
+    taiga_public_register_enabled: false
+    # Taiga site vars
     taiga_secure: true
     taiga_domain: progile.icloudeng.com
     taiga_superuser_password: Platform@icloudeng.com-202109
@@ -22,7 +26,7 @@
     taiga_email_use_tls: true
     taiga_email_use_ssl: false
     # LDAP variables
-    taiga_ldap_enabled: true
+    taiga_ldap_enabled: false
     taiga_ldap_host: "ldap.icloudeng.com"
     taiga_ldap_port: 389
     taiga_ldap_use_ssl: false
@@ -30,6 +34,11 @@
     taiga_ldap_bind_password: "{{ taiga_superuser_password }}"
     taiga_ldap_search_dn: "cn=SYSADMIN,cn=admin,dc=icloudeng,dc=com"
     taiga_ldap_attribute: "uid"
+    # Gitlab variables
+    taiga_gitlab_enabled: true
+    taiga_gitlab_url: "https://devops.icloudeng.com"
+    taiga_gitlab_api_client_id: "f57dc560d030b46fb500db123ecebfa7af88ca31fa605cc14d9c2455033a909d"
+    taiga_gitlab_api_client_secret: "acfbe48fd64a1f799e6037bc2942a39854b8a76bb0925fc3701fee36194c2030"
   pre_tasks:
     - name: APT | Update & Upgrade
       become: true

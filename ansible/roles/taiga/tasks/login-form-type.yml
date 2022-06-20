@@ -1,0 +1,9 @@
+
+# config loginFormType
+- name: Taiga | add loginFormType to ldap if enabled
+  lineinfile:
+    path: "{{ front_config_path }}"
+    firstmatch: yes
+    insertafter: "{"
+    line: '    "loginFormType": "ldap",'
+    state: present
