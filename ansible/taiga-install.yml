@@ -8,7 +8,7 @@
   vars:
     docker: true
     # Taiga Global vars
-    taiga_login_form_type: "normal"
+    taiga_login_form_type: ""
     taiga_public_register_enabled: false
     # Taiga site vars
     taiga_secure: true
@@ -35,7 +35,7 @@
     taiga_ldap_search_dn: "cn=SYSADMIN,cn=admin,dc=icloudeng,dc=com"
     taiga_ldap_attribute: "uid"
     # Gitlab variables
-    taiga_gitlab_enabled: true
+    taiga_gitlab_enabled: false
     taiga_gitlab_url: "https://devops.icloudeng.com"
     taiga_gitlab_api_client_id: "f57dc560d030b46fb500db123ecebfa7af88ca31fa605cc14d9c2455033a909d"
     taiga_gitlab_api_client_secret: "acfbe48fd64a1f799e6037bc2942a39854b8a76bb0925fc3701fee36194c2030"

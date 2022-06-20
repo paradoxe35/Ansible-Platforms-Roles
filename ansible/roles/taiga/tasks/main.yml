@@ -36,9 +36,9 @@
     chdir: "{{ taiga_directory }}"
   register: output
 
-- name: Sleep for 10 seconds and continue with play
+- name: Sleep for 5 seconds and continue with play
   wait_for:
-    timeout: 10
+    timeout: 5
 
 - name: Taiga | generate ssh certificate
   command: "docker-compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }}"
@@ -75,9 +75,9 @@
   register: output
   when: taiga_secure == true
 
-- name: Sleep for 10 seconds and continue with play
+- name: Sleep for 5 seconds and continue with play
   wait_for:
-    timeout: 10
+    timeout: 5
 
 - name: Taiga | Check super exists
   tags: [taiga_superuser]
@@ -113,10 +113,9 @@
 
 
 # Taiga login form type LDAP
-- name: Taiga | login form type LDAP
+- name: Taiga | login form type
   tags: [taiga_ldap, taiga_front_config]
   import_tasks: login-form-type.yml
-  when: taiga_ldap_enabled == true
 
 
 # Taiga Login gitlab
@@ -124,6 +123,7 @@
   tags: [taiga_front_config]
   import_tasks: login-gitlab.yml
   when: taiga_gitlab_enabled == true
+
 
 # restart docker-compose
 - name: "Taiga | Restart docker services"
