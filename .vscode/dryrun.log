@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/icloudeng/Documents/projects/icloudeng/auto-server-installation'
+ansible-playbook -i ansible/hosts ansible/install.yml
+make: Leaving directory `/Users/icloudeng/Documents/projects/icloudeng/auto-server-installation'
+ 
