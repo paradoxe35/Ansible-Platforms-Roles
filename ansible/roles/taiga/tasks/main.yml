@@ -54,7 +54,7 @@
   args:
     chdir: "{{ taiga_directory }}"
     creates: "{{ taiga_directory }}/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
-  when: taiga_secure == true
+  when: taiga_secure == true and not fullchain_file.stat.exists
 
 - name: Taiga | taiga ssl conf template
   template:

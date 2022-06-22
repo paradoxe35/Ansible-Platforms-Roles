@@ -1,6 +1,6 @@
 {% if taiga_gitlab_enabled %}
 {% set shared_config = [
-  {"TAIGA_LOGIN_FORM_TYPE": taiga_login_form_type },
+  {"TAIGA_LOGIN_FORM_TYPE": taiga_login_form_type  or "normal" },
   {"PUBLIC_REGISTER_ENABLED": taiga_public_register_enabled | bool },
 
   {"ENABLE_GITLAB_AUTH": taiga_gitlab_enabled | bool },
@@ -11,7 +11,7 @@
 ] %}
 {% else %}
 {% set shared_config = [
-  {"TAIGA_LOGIN_FORM_TYPE": taiga_login_form_type },
+  {"TAIGA_LOGIN_FORM_TYPE": taiga_login_form_type or "normal" },
   {"PUBLIC_REGISTER_ENABLED": taiga_public_register_enabled | bool },
 ] %}
 {% endif %}
