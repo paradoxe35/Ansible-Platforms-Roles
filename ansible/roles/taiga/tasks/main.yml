@@ -126,13 +126,13 @@
 - name: Taiga | login form type
   tags: [taiga_ldap, taiga_front_config]
   import_tasks: login-form-type.yml
-  when: taiga_ldap_enabled == true or 
+  when: taiga_ldap_enabled == true or taiga_gitlab_enabled == true
 
 # Taiga Login gitlab
 - name: Taiga | Login gitlab
   tags: [taiga_front_config]
   import_tasks: login-gitlab.yml
-  when: taiga_gitlab_enabled == true or taiga_gitlab_enabled == true
+  when: taiga_gitlab_enabled == true
 
 # restart docker-compose
 - name: "Taiga | Restart docker services"
