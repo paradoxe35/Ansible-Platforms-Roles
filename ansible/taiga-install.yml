@@ -10,6 +10,7 @@
     # Taiga Global vars
     taiga_login_form_type: ""
     taiga_public_register_enabled: false
+    taiga_secret_key: "taiga123"
     # Taiga site vars
     taiga_secure: true
     taiga_domain: progile.icloudeng.com

@@ -8,6 +8,7 @@
   {"GITLAB_CLIENT_ID": taiga_gitlab_api_client_id },
   {"GITLAB_URL": taiga_gitlab_url }
 ] %}
+{% set front_conf = taiga_ldap_enabled == True or taiga_login_form_type != "" or taiga_gitlab_enabled == True %}
 version: "3.5"
 
 x-environment:
@@ -18,7 +19,7 @@ x-environment:
   POSTGRES_PASSWORD: taiga
   POSTGRES_HOST: taiga-db
   # Taiga settings
-  TAIGA_SECRET_KEY: "taiga123"
+  TAIGA_SECRET_KEY: "{{ taiga_secret_key }}"
   TAIGA_SITES_SCHEME: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}"
   TAIGA_SITES_DOMAIN: "{{ taiga_domain }}"
   TAIGA_SUBPATH: "" # "" or "/subpath"
@@ -49,9 +50,10 @@ x-volumes:
   &default-back-volumes
     - taiga-static-data:/taiga-back/static
     - taiga-media-data:/taiga-back/media
+{% if taiga_ldap_enabled %}
     - taiga-settings:/taiga-back/settings
     - taiga-lib:/opt/venv/lib/
-  # - ./settings:/taiga-back/settings
+{% endif %}
   # - ./settings/config.py:/taiga-back/settings/config.py
 
 
@@ -116,15 +118,17 @@ services:
 {% endfor %}
     networks:
       - taiga
+{% if front_conf %}
     volumes:
       - taiga-front-config:/usr/share/nginx/html/
+{% endif %}
 
   taiga-events:
     image: taigaio/taiga-events:latest
     environment:
       RABBITMQ_USER: taiga
       RABBITMQ_PASS: taiga
-      TAIGA_SECRET_KEY: "taiga123"
+      TAIGA_SECRET_KEY: "{{ taiga_secret_key }}"
     networks:
       - taiga
     depends_on:
@@ -146,7 +150,7 @@ services:
     image: taigaio/taiga-protected:latest
     environment:
       MAX_AGE: 360
-      SECRET_KEY: "taiga123"
+      SECRET_KEY: "{{ taiga_secret_key }}"
     networks:
       - taiga
 
@@ -179,9 +183,13 @@ volumes:
   taiga-db-data:
   taiga-async-rabbitmq-data:
   taiga-events-rabbitmq-data:
+{% if front_conf %}
+  taiga-front-config:
+{% endif %}
+{% if taiga_ldap_enabled %}
   taiga-settings:
   taiga-lib:
-  taiga-front-config:
+{% endif %}
 
 networks:
   taiga:

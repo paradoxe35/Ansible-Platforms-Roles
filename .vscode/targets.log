@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Mon Jun 20 15:24:47 2022
+# Make data base, printed on Wed Jun 22 11:24:29 2022
 
 # Variables
 
@@ -42,7 +42,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-346a1662-4f89-4851-957e-2cdc5348198b.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-a8e94aad-7c55-43f8-8dc7-8d7af44c86f6.sock
 # environment
 VSCODE_CWD = /Users/icloudeng/Documents/projects/icloudeng/auto-server-installation
 # environment
@@ -102,7 +102,7 @@ USER = icloudeng
 # makefile
 .DEFAULT_GOAL := ansibe_playbook
 # environment
-TERM_SESSION_ID = 2D25407D-14FC-4BCC-9E90-7F60232FED14
+TERM_SESSION_ID = F52F819F-4689-4ABB-BA82-7EB156428A69
 # environment
 LESS = -R
 # automatic
@@ -128,7 +128,7 @@ MFLAGS = -Rrqp
 # environment
 TERM_PROGRAM_VERSION = 445
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.28534674.28534680.D45401D4-C207-44AC-9E9D-251CE9355EEF
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.28534674.28534680.D0FE54AE-978B-4F73-9CF8-E82142610489
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -255,7 +255,7 @@ ansible_taiga_only:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jun 20 15:24:47 2022
+# Finished Make data base on Wed Jun 22 11:24:29 2022
 
  
 make: *** No rule to make target `all'.  Stop.
