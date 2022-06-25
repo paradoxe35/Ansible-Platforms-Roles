@@ -8,26 +8,26 @@
   vars:
     docker: true
     # Taiga Global vars
-    taiga_login_form_type: ""
+    taiga_login_form_type: "ldap"
     taiga_public_register_enabled: false
     taiga_secret_key: "taiga123"
     # Taiga site vars
     taiga_secure: true
     taiga_domain: progile.icloudeng.com
     taiga_superuser_password: Platform@icloudeng.com-202109
-    taiga_superuser_username: installation
-    taiga_superuser_email: installation@icloudeng.com
+    taiga_superuser_username: admin
+    taiga_superuser_email: taiga@icloudeng.com
     # Email variables
     taiga_email_enabled: true
-    taiga_email_from: "taiga@icloudeng.com"
     taiga_email_host: "mail.icloudeng.com"
     taiga_email_port: 587
+    taiga_email_from: "{{ taiga_superuser_email }}"
     taiga_email_username: "{{ taiga_superuser_email }}"
     taiga_email_password: "{{ taiga_superuser_password }}"
     taiga_email_use_tls: true
     taiga_email_use_ssl: false
     # LDAP variables
-    taiga_ldap_enabled: false
+    taiga_ldap_enabled: true
     taiga_ldap_host: "ldap.icloudeng.com"
     taiga_ldap_port: 389
     taiga_ldap_use_ssl: false
