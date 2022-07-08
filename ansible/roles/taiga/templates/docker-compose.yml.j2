@@ -67,6 +67,7 @@ x-volumes:
 services:
   taiga-db:
     image: postgres:12.3
+    restart: unless-stopped
     environment:
       POSTGRES_DB: taiga
       POSTGRES_USER: taiga
@@ -78,6 +79,7 @@ services:
 
   taiga-back:
     image: taigaio/taiga-back:latest
+    restart: unless-stopped
     container_name: taiga-back
     environment: *default-back-environment
     volumes: *default-back-volumes
@@ -90,6 +92,7 @@ services:
 
   taiga-async:
     image: taigaio/taiga-back:latest
+    restart: unless-stopped
     entrypoint: ["/taiga-back/docker/async_entrypoint.sh"]
     environment: *default-back-environment
     volumes: *default-back-volumes
@@ -102,6 +105,7 @@ services:
 
   taiga-async-rabbitmq:
     image: rabbitmq:3.8-management-alpine
+    restart: unless-stopped
     environment:
       RABBITMQ_ERLANG_COOKIE: secret-erlang-cookie
       RABBITMQ_DEFAULT_USER: taiga
@@ -114,6 +118,7 @@ services:
 
   taiga-front:
     image: taigaio/taiga-front:latest
+    restart: unless-stopped
     environment:
       TAIGA_URL: "http{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}://{{ taiga_domain }}"
       TAIGA_WEBSOCKETS_URL: "ws{{ 's' if taiga_secure == True and taiga_is_secure == True else '' }}://{{ taiga_domain }}"
@@ -132,6 +137,7 @@ services:
 
   taiga-events:
     image: taigaio/taiga-events:latest
+    restart: unless-stopped
     environment:
       RABBITMQ_USER: taiga
       RABBITMQ_PASS: taiga
@@ -143,6 +149,7 @@ services:
 
   taiga-events-rabbitmq:
     image: rabbitmq:3.8-management-alpine
+    restart: unless-stopped
     environment:
       RABBITMQ_ERLANG_COOKIE: secret-erlang-cookie
       RABBITMQ_DEFAULT_USER: taiga
@@ -155,6 +162,7 @@ services:
 
   taiga-protected:
     image: taigaio/taiga-protected:latest
+    restart: unless-stopped
     environment:
       MAX_AGE: 360
       SECRET_KEY: "{{ taiga_secret_key }}"
@@ -163,6 +171,7 @@ services:
 
   taiga-gateway:
     image: nginx:latest
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -178,6 +187,8 @@ services:
       - taiga-front
       - taiga-back
       - taiga-events
+
+
   certbot:
     image: certbot/certbot:latest
     volumes:
