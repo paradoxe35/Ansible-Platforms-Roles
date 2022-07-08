@@ -89,13 +89,6 @@
     timeout: 5
   when: taiga_secure == true
 
-# For info check here https://github.com/taigaio/taiga-docker/issues/73
-- name: Taiga | Start on only taiga-event server
-  command: "docker-compose -f docker-compose.yml up -d taiga-events"
-  args:
-    chdir: "{{ taiga_directory }}"
-  when: taiga_secure == true
-
 - name: Taiga | Check super exists
   tags: [taiga_superuser]
   expect:
@@ -146,3 +139,14 @@
   command: "docker-compose -f docker-compose.yml up -d --force-recreate"
   args:
     chdir: "{{ taiga_directory }}"
+
+# Wait 5 seconds and start again container (For info check here https://github.com/taigaio/taiga-docker/issues/73)
+- name: Taiga Issue | Wait 5 seconds
+  wait_for:
+    timeout: 5
+
+- name: Taiga | Start container which is not running
+  command: "docker-compose -f docker-compose.yml up -d"
+  args:
+    chdir: "{{ taiga_directory }}"
+  when: taiga_secure == true
