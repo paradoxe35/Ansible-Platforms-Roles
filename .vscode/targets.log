@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Wed Jun 22 11:24:29 2022
+# Make data base, printed on Fri Jul  8 02:36:24 2022
 
 # Variables
 
@@ -42,9 +42,9 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-a8e94aad-7c55-43f8-8dc7-8d7af44c86f6.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-e1778f1b-b9c0-4536-abf8-c12f41f333b5.sock
 # environment
-VSCODE_CWD = /Users/icloudeng/Documents/projects/icloudeng/auto-server-installation
+VSCODE_CWD = /Users/icloudeng
 # environment
 PATH = /Users/icloudeng/.deno/bin:/Users/icloudeng/Library/pnpm:/Users/icloudeng/.npm-global/bin:/Users/icloudeng/.composer/vendor/bin:/usr/local/sbin:/Users/icloudeng/.poetry/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Users/icloudeng/.npm-global/bin
 # environment
@@ -102,7 +102,7 @@ USER = icloudeng
 # makefile
 .DEFAULT_GOAL := ansibe_playbook
 # environment
-TERM_SESSION_ID = F52F819F-4689-4ABB-BA82-7EB156428A69
+TERM_SESSION_ID = B490DF17-A592-4A5A-94DB-F11DBF72FED4
 # environment
 LESS = -R
 # automatic
@@ -128,7 +128,7 @@ MFLAGS = -Rrqp
 # environment
 TERM_PROGRAM_VERSION = 445
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.28534674.28534680.D0FE54AE-978B-4F73-9CF8-E82142610489
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.28534674.28534680.38C80527-FB46-430A-95EE-CC88F17093DB
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -255,7 +255,7 @@ ansible_taiga_only:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Jun 22 11:24:29 2022
+# Finished Make data base on Fri Jul  8 02:36:24 2022
 
  
 make: *** No rule to make target `all'.  Stop.

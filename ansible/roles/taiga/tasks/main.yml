@@ -89,6 +89,12 @@
     timeout: 5
   when: taiga_secure == true
 
+- name: Taiga | Start on only taiga-event server
+  command: "docker-compose -f docker-compose.yml up -d taiga-events"
+  args:
+    chdir: "{{ taiga_directory }}"
+  when: taiga_secure == true
+
 - name: Taiga | Check super exists
   tags: [taiga_superuser]
   expect:
