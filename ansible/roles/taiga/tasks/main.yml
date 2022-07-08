@@ -89,6 +89,7 @@
     timeout: 5
   when: taiga_secure == true
 
+# For info check here https://github.com/taigaio/taiga-docker/issues/73
 - name: Taiga | Start on only taiga-event server
   command: "docker-compose -f docker-compose.yml up -d taiga-events"
   args:
