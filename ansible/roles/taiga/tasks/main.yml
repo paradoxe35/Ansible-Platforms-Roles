@@ -38,7 +38,7 @@
   when: not fullchain_file.stat.exists or taiga_secure == false
 
 - name: Taiga | Docker compose create and start services
-  command: "docker-compose -f docker-compose.yml up -d"
+  command: "docker compose -f docker-compose.yml up -d"
   args:
     chdir: "{{ taiga_directory }}"
   register: output
@@ -49,8 +49,15 @@
     timeout: 5
   when: not fullchain_file.stat.exists or taiga_secure == false
 
+- name: Taiga | generate ssh certificate (Dry Run)
+  command: "docker compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }} --dry-run"
+  args:
+    chdir: "{{ taiga_directory }}"
+    creates: "{{ taiga_directory }}/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
+  when: taiga_secure == true and not fullchain_file.stat.exists
+
 - name: Taiga | generate ssh certificate
-  command: "docker-compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }}"
+  command: "docker compose run --rm certbot certonly --non-interactive --agree-tos --webroot --webroot-path /var/www/certbot/ -d {{ taiga_domain }} -m {{ system_email }}"
   args:
     chdir: "{{ taiga_directory }}"
     creates: "{{ taiga_directory }}/certbot/conf/live/{{ taiga_domain }}/fullchain.pem"
@@ -78,7 +85,7 @@
   when: taiga_secure == true
 
 - name: Taiga | Docker compose recreate services
-  command: "docker-compose -f docker-compose.yml up -d --force-recreate"
+  command: "docker compose -f docker-compose.yml up -d --force-recreate"
   args:
     chdir: "{{ taiga_directory }}"
   register: output
@@ -94,7 +101,7 @@
   expect:
     chdir: "{{ taiga_directory }}"
     echo: true
-    command: 'docker-compose exec taiga-db psql -U taiga -d taiga --command "select email from users_user"'
+    command: 'docker compose exec taiga-db psql -U taiga -d taiga --command "select email from users_user"'
     responses:
       "Password": "taiga"
   register: user_exists
@@ -103,7 +110,7 @@
   tags: taiga_superuser
   expect:
     chdir: "{{ taiga_directory }}"
-    command: "docker-compose exec taiga-back python manage.py createsuperuser --username {{ taiga_superuser_username }} --email {{ taiga_superuser_email }}"
+    command: "docker compose exec taiga-back python manage.py createsuperuser --username {{ taiga_superuser_username }} --email {{ taiga_superuser_email }}"
     echo: true
     responses:
       "Password": "{{ taiga_superuser_password }}"
@@ -136,7 +143,7 @@
 
 # restart docker-compose
 - name: "Taiga | Restart docker services"
-  command: "docker-compose -f docker-compose.yml up -d --force-recreate"
+  command: "docker compose -f docker-compose.yml up -d --force-recreate"
   args:
     chdir: "{{ taiga_directory }}"
 
@@ -146,6 +153,6 @@
     timeout: 5
 
 - name: Taiga | Start container which is not running
-  command: "docker-compose -f docker-compose.yml up -d"
+  command: "docker compose -f docker-compose.yml up -d"
   args:
     chdir: "{{ taiga_directory }}"
