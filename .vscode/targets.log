@@ -8,10 +8,12 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jan 31 09:09:50 2023
+# Make data base, printed on Tue Jan 31 11:37:58 2023
 
 # Variables
 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -43,7 +45,9 @@ GOPATH = C:\Users\icloudeng\go
 # automatic
 @D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\LOCAL\crashpad_764_NJOBTXAWCWLHZFOB
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\LOCAL\crashpad_14124_LKCTLOYNCLZAHRTJ
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -73,7 +77,7 @@ ONEDRIVE = C:\Users\icloudeng\OneDrive
 # makefile
 CURDIR := c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
 # environment
@@ -91,7 +95,7 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 764
+VSCODE_PID = 14124
 # automatic
 ?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
 # automatic
@@ -209,7 +213,7 @@ CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 9, GenuineIntel
 # variable set hash-table stats:
-# Load=98/1024=10%, Rehash=0, Collisions=7/125=6%
+# Load=100/1024=10%, Rehash=0, Collisions=8/127=6%
 
 # Pattern-specific Variable Values
 
@@ -217,7 +221,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 9, GenuineIntel
 
 # Directories
 
-# . (key c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles, mtime 1675148145): 13 files, no impossibilities.
+# . (key c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles, mtime 1675156027): 13 files, no impossibilities.
 
 # 13 files, no impossibilities in 1 directories.
 
@@ -283,13 +287,12 @@ ansible_taiga_only:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 215 B / avg = 10 B
-# current buf: size = 8174 B / used = 215 B / count = 20 / avg = 10  
-B
+# strcache buffers: 1 (0) / strings = 20 / storage = 207 B / avg = 10 B
+# current buf: size = 8174 B / used = 207 B / count = 20 / avg = 10 B
 
 # strcache performance: lookups = 28 / hit rate = 28%
 # hash-table stats:
 # Load=20/8192=0%, Rehash=0, Collisions=0/28=0%
-# Finished Make data base on Tue Jan 31 09:09:50 2023
+# Finished Make data base on Tue Jan 31 11:37:58 2023
 
  
