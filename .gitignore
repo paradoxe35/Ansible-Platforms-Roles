@@ -10,3 +10,4 @@ venv3/
 .env
 hosts
 .venv/
+__pycache__

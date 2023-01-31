@@ -2,6 +2,6 @@
 [test_server]
 localhost
 
-[test_server:vars]
+[progile_server:vars]
 ansible_connection=ssh
-ansible_user=root
+ansible_user=ubuntu

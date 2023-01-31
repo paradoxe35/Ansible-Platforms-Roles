@@ -55,6 +55,7 @@ x-environment:
 
 x-volumes:
   &default-back-volumes
+    - /var/run/docker.sock:/var/run/docker.sock
     - taiga-static-data:/taiga-back/static
     - taiga-media-data:/taiga-back/media
 {% if taiga_ldap_enabled %}

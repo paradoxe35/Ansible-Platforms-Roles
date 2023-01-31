@@ -1,5 +1,5 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/icloudeng/Documents/projects/icloudeng/auto-server-installation'
+make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory 'c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles'
 poetry run ansible-playbook -i ansible/hosts ansible/install.yml
-make: Leaving directory `/Users/icloudeng/Documents/projects/icloudeng/auto-server-installation'
+make: Leaving directory 'c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles'
  

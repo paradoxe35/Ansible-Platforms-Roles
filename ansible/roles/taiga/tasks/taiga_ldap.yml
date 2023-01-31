@@ -98,9 +98,9 @@
       LDAP_BIND_DN = "{{ taiga_ldap_bind_dn }}"
       LDAP_BIND_PASSWORD = "{{ taiga_ldap_bind_password }}"
       LDAP_SEARCH_BASE = "{{ taiga_ldap_search_dn }}"
-      LDAP_USERNAME_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
-      LDAP_EMAIL_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
-      LDAP_FULL_NAME_ATTRIBUTE = "{{ taiga_ldap_attribute }}"
+      LDAP_USERNAME_ATTRIBUTE = "{{ taiga_ldap_uid_attr }}"
+      LDAP_EMAIL_ATTRIBUTE = "{{ taiga_ldap_email_attr }}"
+      LDAP_FULL_NAME_ATTRIBUTE = "{{ taiga_ldap_name_attr }}"
       LDAP_START_TLS = False
       #LDAP_FALLBACK = "normal"
       #LDAP_SEARCH_FILTER_ADDITIONAL = '(uid=*)'

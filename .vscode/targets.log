@@ -1,168 +1,215 @@
-make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-# GNU Make 3.81
-# Copyright (C) 2006  Free Software Foundation, Inc.
-# This is free software; see the source for copying conditions.
-# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
-# PARTICULAR PURPOSE.
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
 
-# This program built for i386-apple-darwin11.3.0
+# GNU Make 4.3
+# Built for Windows32
+# Copyright (C) 1988-2020 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jul  8 02:36:24 2022
+# Make data base, printed on Tue Jan 31 09:09:50 2023
 
 # Variables
 
-# automatic
-<D = $(patsubst %/,%,$(dir $<))
-# automatic
-?F = $(notdir $?)
 # environment
-ELECTRON_NO_ATTACH_CONSOLE = 1
+SYSTEMDRIVE = C:
 # environment
-LC_CTYPE = UTF-8
+JAVA_HOME = C:\Program Files\OpenJDK\openjdk-8u302-b08
 # environment
-VSCODE_LOG_NATIVE = false
-# automatic
-?D = $(patsubst %/,%,$(dir $?))
-# automatic
-@D = $(patsubst %/,%,$(dir $@))
-# automatic
-@F = $(notdir $@)
-# makefile
-CURDIR := /Users/icloudeng/Documents/projects/icloudeng/auto-server-installation
-# makefile
-SHELL = /bin/sh
+LC_ALL = C
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+PNPM_HOME = C:\Users\icloudeng\AppData\Local\pnpm
 # environment
-_ = /usr/bin/make
-# makefile (from `Makefile', line 1)
-MAKEFILE_LIST :=  Makefile
+USERPROFILE = C:\Users\icloudeng
 # environment
-VSCODE_VERBOSE_LOGGING = true
+VBOX_MSI_INSTALL_PATH = C:\Program Files\Oracle\VirtualBox\
 # environment
-__CFBundleIdentifier = com.microsoft.VSCode
+LOCALAPPDATA = C:\Users\icloudeng\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/vscode-ipc-e1778f1b-b9c0-4536-abf8-c12f41f333b5.sock
+VSCODE_CWD = C:\Users\icloudeng\AppData\Local\Programs\Microsoft VS Code
 # environment
-VSCODE_CWD = /Users/icloudeng
+CHOCOLATEYINSTALL = C:\ProgramData\chocolatey
 # environment
-PATH = /Users/icloudeng/.deno/bin:/Users/icloudeng/Library/pnpm:/Users/icloudeng/.npm-global/bin:/Users/icloudeng/.composer/vendor/bin:/usr/local/sbin:/Users/icloudeng/.poetry/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Users/icloudeng/.npm-global/bin
+SYSTEMROOT = C:\WINDOWS
 # environment
-LSCOLORS = Gxfxcxdxbxegedabagacad
+PROCESSOR_LEVEL = 6
 # environment
-PNPM_HOME = /Users/icloudeng/Library/pnpm
-# environment
-VSCODE_LOG_STACK = false
-# environment
-ELECTRON_RUN_AS_NODE = 1
+PSMODULEPATH = C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
 # default
-.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+MAKE_COMMAND := C:/ProgramData/chocolatey/lib/make/tools/install/bin/make.exe
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.wqnLeiuhCN/Listeners
+GOPATH = C:\Users\icloudeng\go
+# automatic
+@D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\LOCAL\crashpad_764_NJOBTXAWCWLHZFOB
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# default
+.VARIABLES := 
+# automatic
+%D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
+# automatic
+^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_PIPE_LOGGING = true
+VSCODE_CODE_CACHE_PATH = C:\Users\icloudeng\AppData\Roaming\Code\CachedData\97dec172d3256f8ca4bfb2143f3f76b503ca0534
 # environment
-PWD = /Users/icloudeng/Documents/projects/icloudeng/auto-server-installation
-# environment
-ORIGINAL_XDG_CURRENT_DESKTOP = undefined
-# environment
-VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
-# environment
-HOME = /Users/icloudeng
+LANG = C
 # default
-MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+.LOADED := 
 # environment
-VSCODE_CLI = 1
+TMP = C:\Users\ICLOUD~1\AppData\Local\Temp
+# default
+.INCLUDE_DIRS = .
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/icloudeng/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+PROCESSOR_ARCHITEW6432 = AMD64
+# makefile
+MAKEFLAGS = pqrR
 # environment
-LOGNAME = icloudeng
+ONEDRIVE = C:\Users\icloudeng\OneDrive
+# makefile
+CURDIR := c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
-# environment
-ZSH = /Users/icloudeng/.oh-my-zsh
-# environment
-VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
-^D = $(patsubst %/,%,$(dir $^))
+*D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
 # environment
-XPC_FLAGS = 0x0
+PROGRAMFILES = C:\Program Files (x86)
+# environment
+MFLAGS = -pqrR
 # default
-MAKE = $(MAKE_COMMAND)
+.SHELLFLAGS := -c
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# automatic
++D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
+# makefile (from 'Makefile', line 1)
+MAKEFILE_LIST := Makefile
+# automatic
+@F = $(notdir $@)
+# environment
+VSCODE_PID = 764
+# automatic
+?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
+# automatic
+*F = $(notdir $*)
+# automatic
+<D = $(patsubst %/,%,$(patsubst %\,%,$(dir $<)))
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# default
+MAKE_HOST := Windows32
+# environment
+ANDROID_HOME = C:\Users\icloudeng\AppData\Local\Android\Sdk
+# environment
+PROGRAMDATA = C:\ProgramData
+# default
+SHELL := sh.exe
+# environment
+HOMEPATH = \Users\icloudeng
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 3
+DRIVERDATA = C:\Windows\System32\Drivers\DriverData
+# environment
+COMSPEC = C:\WINDOWS\system32\cmd.exe
+# environment
+WINDIR = C:\WINDOWS
+# environment
+MAKELEVEL := 0
 # default
-MAKE_VERSION := 3.81
+MAKE = $(MAKE_COMMAND)
 # environment
-USER = icloudeng
-# makefile
-.DEFAULT_GOAL := ansibe_playbook
+PATH = C:\Program Files\Microsoft\jdk-11.0.12.7-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\openjdk-8u302-b08\bin;C:\HashiCorp\Vagrant\bin;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Go\bin;C:\Program Files\Neovim\/bin;C:\Program Files\nodejs\;C:\Program Files\Cloudflare\Cloudflare WARP\;C:\Program Files\WireGuard\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Users\icloudeng\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\icloudeng\AppData\Local\Programs\Python\Python311\;C:\Users\icloudeng\AppData\Local\pnpm;C:\Users\icloudeng\scoop\shims;C:\Users\icloudeng\AppData\Local\pnpm;C:\Users\icloudeng\.cargo\bin;C:\Users\icloudeng\AppData\Local\Microsoft\WindowsApps;C:\Users\icloudeng\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\icloudeng\AppData\Local\Android\Sdk\platform-tools;C:\Users\icloudeng\AppData\Local\GitHubDesktop\bin;C:\tools\flutter\bin;C:\tools\scrcpy-v1.21;C:\tools\php-8.1.7;C:\Users\icloudeng\AppData\Roaming\Composer\vendor\bin;C:\Program Files\heroku\bin;C:\tools\packer;C:\tools\symfony-cli;C:\Program Files\OpenSSL-Win64\bin;C:\Users\icloudeng\go\bin;C:\Users\icloudeng\AppData\Roaming\npm;C:\Users\icloudeng\teleport-v11.2.1-windows-amd64-bin\teleport;C:\Users\icloudeng\AppData\Roaming\Python\Scripts;
 # environment
-TERM_SESSION_ID = B490DF17-A592-4A5A-94DB-F11DBF72FED4
+ZES_ENABLE_SYSMAN = 1
 # environment
-LESS = -R
-# automatic
-%D = $(patsubst %/,%,$(dir $%))
-# default
-MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
-# environment
-TERM_PROGRAM = Apple_Terminal
-# default
-.VARIABLES := 
-# environment
-TMPDIR = /var/folders/bm/3nz7y4cj7ts39srf5xsdy9440000gn/T/
-# automatic
-*F = $(notdir $*)
-# environment
-VSCODE_IPC_HOOK = /Users/icloudeng/Library/Application Support/Code/1.68.1-main.sock
-# makefile
-MAKEFLAGS = Rrqp
-# environment
-MFLAGS = -Rrqp
-# automatic
-*D = $(patsubst %/,%,$(dir $*))
-# environment
-TERM_PROGRAM_VERSION = 445
-# environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.28534674.28534680.38C80527-FB46-430A-95EE-CC88F17093DB
-# automatic
-+D = $(patsubst %/,%,$(dir $+))
-# automatic
-+F = $(notdir $+)
-# environment
-DENO_INSTALL = /Users/icloudeng/.deno
-# environment
-__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
-# environment
-COMMAND_MODE = unix2003
+COMPUTERNAME = DESKTOP-T7NN8MU
 # default
 MAKEFILES := 
 # automatic
-<F = $(notdir $<)
-# environment
-PAGER = less
-# environment
-LC_ALL = C
-# automatic
 ^F = $(notdir $^)
+# environment
+PROMPT = $P$G
+# environment
+OPENSSL_CONF = C:\Program Files\OpenSSL-Win64\bin\openssl.cfg
+# environment
+CHOCOLATEYLASTPATHUPDATE = 133157766085287923
+# environment
+LOGONSERVER = \\DESKTOP-T7NN8MU
+# environment
+USERNAME = icloudeng
+# environment
+COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files
+# automatic
+?F = $(notdir $?)
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
+# automatic
++F = $(notdir $+)
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERDOMAIN = DESKTOP-T7NN8MU
+# 'override' directive
+GNUMAKEFLAGS := 
+# environment
+OS = Windows_NT
+# makefile
+.DEFAULT_GOAL := ansibe_playbook
+# default
+MAKE_VERSION := 4.3
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# environment
+USERDOMAIN_ROAMINGPROFILE = DESKTOP-T7NN8MU
+# environment
+NUMBER_OF_PROCESSORS = 4
+# environment
+PUBLIC = C:\Users\Public
+# environment
+ASL.LOG = Destination=file
+# environment
+APPDATA = C:\Users\icloudeng\AppData\Roaming
+# environment
+HOMEDRIVE = C:
+# environment
+PROCESSOR_ARCHITECTURE = x86
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# environment
+TEMP = C:\Users\ICLOUD~1\AppData\Local\Temp
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\5753f21f3f43a30f3db88d47cffbec5b-1.74.3-main-sock
+# default
+.RECIPEPREFIX := 
+# automatic
+<F = $(notdir $<)
 # default
 SUFFIXES := 
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+SESSIONNAME = Console
 # default
-.INCLUDE_DIRS = /usr/local/include
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync load
 # environment
-MAKELEVEL := 0
+PROCESSOR_REVISION = 8e09
 # environment
-LANG = C
+CHOCOLATEYTOOLSLOCATION = C:\tools
 # environment
-TERM = xterm-256color
-# environment
-VSCODE_PID = 97945
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 142 Stepping 9, GenuineIntel
 # variable set hash-table stats:
-# Load=75/1024=7%, Rehash=0, Collisions=1/99=1%
+# Load=98/1024=10%, Rehash=0, Collisions=7/125=6%
 
 # Pattern-specific Variable Values
 
@@ -170,7 +217,7 @@ VSCODE_PID = 97945
 
 # Directories
 
-# . (device 16777222, inode 18670829): 13 files, no impossibilities.
+# . (key c:/Users/icloudeng/Documents/icloudeng/projects/ansible-platforms-roles, mtime 1675148145): 13 files, no impossibilities.
 
 # 13 files, no impossibilities in 1 directories.
 
@@ -180,37 +227,19 @@ VSCODE_PID = 97945
 
 # Files
 
-# Not a target:
-all:
-#  Command-line target.
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has not been updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
-
 ansibe_playbook:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 2):
+#  recipe to execute (from 'Makefile', line 2):
 	@poetry run ansible-playbook -i ansible/hosts ansible/install.yml
-	
-
-# Not a target:
-.SUFFIXES:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-20 11:33:23
+#  Last modified 2023-01-15 19:09:17
 #  File has been updated.
 #  Successfully updated.
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 .DEFAULT:
@@ -218,45 +247,49 @@ Makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
 ansible_taiga_ldap:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 11):
+#  recipe to execute (from 'Makefile', line 11):
 	@poetry run ansible-playbook -i ansible/hosts ansible/taiga-install.yml --tags "taiga_ldap"
-	
 
 ansible_taiga:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 5):
+#  recipe to execute (from 'Makefile', line 5):
 	@poetry run ansible-playbook -i ansible/hosts ansible/taiga-install.yml
-	
 
 ansible_taiga_only:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 8):
+#  recipe to execute (from 'Makefile', line 8):
 	@poetry run ansible-playbook -i ansible/hosts ansible/taiga-install.yml --tags "taiga"
-	
 
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/20=0%
+# Load=8/1024=1%, Rehash=0, Collisions=0/18=0%
 # VPATH Search Paths
 
-# No `vpath' search paths.
+# No 'vpath' search paths.
 
-# No general (`VPATH' variable) search path.
+# No general ('VPATH' variable) search path.
 
-# # of strings in strcache: 1
-# # of strcache buffers: 1
-# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
-# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+# strcache buffers: 1 (0) / strings = 20 / storage = 215 B / avg = 10 B
+# current buf: size = 8174 B / used = 215 B / count = 20 / avg = 10  
+B
 
-# Finished Make data base on Fri Jul  8 02:36:24 2022
+# strcache performance: lookups = 28 / hit rate = 28%
+# hash-table stats:
+# Load=20/8192=0%, Rehash=0, Collisions=0/28=0%
+# Finished Make data base on Tue Jan 31 09:09:50 2023
 
  
-make: *** No rule to make target `all'.  Stop.
-
